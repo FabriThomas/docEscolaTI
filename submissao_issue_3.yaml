@@ -1,31 +1,16 @@
 equipe: Steely
 turma: B
 artefatos:
-  repositorio-documentacao-e-arquitetura:
+  repositorio-1:
     link: https://github.com/FabriThomas/docEscolaTI
     descricao: |
-      Repositório oficial de documentação, modelagem, arquitetura e governança SDLC do Projeto Steely
-      (ecossistema circular de hardware com triagem por Visão Computacional, gamificação em moedas
-      virtuais, custódia simulada de 7 dias e validação presencial offline-first via QR Code Ed25519):
-      - Planejamento (100% em Markdown nativo + arquivos PDF/XLSX originais e diagramas renderizados):
-        Termo de Abertura do Projeto (TAP v3.0), Requisitos Funcionais (RF-01 a RF-21) e Não Funcionais
-        (RNF-01 a RNF-13), Regras de Negócio (RB-01 a RB-15 e regras granulares STY001 a STY058),
-        Especificação completa de Casos de Uso (UC-01 a UC-16 e 61 abas STYG/STY001..STY058),
-        Diagrama de Casos de Uso, DER lógico completo (66 tabelas em 6 pacotes e 6 schemas PostgreSQL 15),
-        Diagrama de Classes UML 2.5 (95 elementos em 6 pacotes com padrões GoF Composite, Facade e Proxy),
-        Diagrama de Atividades/Processos BPMN (9 fluxos ponta a ponta N0, P1..P6c) e Catálogo das 59
-        telas do Protótipo de Alta Fidelidade (PROTOTIPAGEM_001 a PROTOTIPAGEM_059).
-      - Pré-código (27 ADRs em Markdown e PDF padronizado — ADR-01 a ADR-27): Motor do Scanner IA em
-        4 estágios (YOLO11s + ConvNeXt/SigLIP + PaddleOCR + ArcFace/FAISS em ONNX Runtime), Censura
-        Anti-Fuga de PII, Escrow Simulado de 7 dias, DaaS com k-anonimato (k >= 30 e >= 3 vendedores),
-        Trilha de Auditoria Imutável com cadeia SHA-256, Arbitragem com Dupla Aprovação, Exclusão LGPD
-        com quarentena de 30 dias, Supabase PostgreSQL + RLS/RBAC/ABAC, Ledger FIFO append-only de
-        Moedas, Storage WebP sem EXIF, Contrato OpenAPI 3.1 + RFC 9457, Idempotência (72h), Concorrência
-        de Lances (SELECT FOR UPDATE + Anti-Sniping 3 min), Jobs pg_cron + Outbox, Pirâmide de Testes
-        Orientada a Risco, Frontend Web (React + Vite + TanStack Query + Zustand + WCAG 2.1 AA +
-        Turnstile + ESG) e App Android Offline-First (Expo + WatermelonDB + SecureStore + FCM + Routes API).
-      - Governança do SDLC, Jira (EDTS) e Roadmap IA: Gestão ágil em Scrum (16 Sprints, 8 Épicos e
-        387 itens rastreados no Jira com estimativa nativa em horas integrada à meta de 1.000h no
-        Clockify), Roadmap de Engenharia do Scanner IA (pipeline de 2.119 imagens limpas e auto-anotação
-        VLM Schema V4 entregues + 10 tasks de treino/inferência), organização Multi-Repo, estratégia de
-        branches (main + dev + feature branches), Conventional Commits, PRs revisados e Definition of Done.
+      Documentação do Steely, plataforma web e mobile voltada à economia circular de
+      hardware de TI (venda, leilão, doação para ONGs e descarte em ecopontos). O sistema
+      combina identificação automática de peças por visão computacional (Scanner IA),
+      gamificação com moedas virtuais, custódia segura de pagamento (Escrow de 7 dias),
+      confirmação presencial via QR Code offline e métricas de impacto ambiental (ESG).
+      O repositório está organizado em três pastas: 01-planejamento (TAP, requisitos,
+      regras de negócio, especificações e diagramas de casos de uso, DER, classes, BPMN
+      e catálogo das 59 telas do protótipo), 02-adrs (consolidação das 27 decisões de
+      arquitetura em Markdown e PDF) e 03-sdlc-e-governanca (processo de desenvolvimento,
+      organização das Sprints no Jira e roadmap do Scanner IA).
