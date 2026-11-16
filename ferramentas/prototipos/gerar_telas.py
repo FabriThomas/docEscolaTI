@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Gera as telas 001-006 (Sprint 13) do Steely em HTML.
+"""Gera as telas 001-006 e 049-054 do Steely em HTML.
 
 Cada arquivo tem 1920x1200 com o celular de 375x812 em (773, 194), igual as telas
 ja importadas no Figma, para importar com o plugin html.to.design.
@@ -55,6 +55,16 @@ I = {
  'user':'<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
  'cpu':'<rect x="4" y="4" width="16" height="16" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1"/><path d="M15 2v2M15 20v2M2 15h2M2 9h2M20 15h2M20 9h2M9 2v2M9 20v2"/>',
  'memory':'<path d="M6 19v-3M10 19v-3M14 19v-3M18 19v-3M8 11V9M16 11V9M12 11V9M2 15h20M2 7a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v1.1a2 2 0 0 0 0 3.837V17a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2v-5.1a2 2 0 0 0 0-3.837Z"/>',
+ 'star':'<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z"/>',
+ 'clock':'<circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/>',
+ 'mail':'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+ 'phone':'<rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/>',
+ 'logout':'<path d="m16 17 5-5-5-5M21 12H9M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>',
+ 'nav':'<path d="M3 11 22 2l-9 19-2-8z"/>',
+ 'gem':'<path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6M2 9h20"/>',
+ 'cloud':'<path d="M17.5 19H9a7 7 0 1 1 6.71-9h1.79a4.5 4.5 0 1 1 0 9Z"/>',
+ 'recycle':'<path d="M7 19H4.815a1.83 1.83 0 0 1-1.57-.881 1.785 1.785 0 0 1-.004-1.784L7.196 9.5M11 19h8.203a1.83 1.83 0 0 0 1.556-.89 1.784 1.784 0 0 0 0-1.775l-1.226-2.12M14 16l-3 3 3 3M8.293 13.596 7.196 9.5 3.1 10.598M9.344 5.811l1.093-1.892A1.83 1.83 0 0 1 11.985 3a1.784 1.784 0 0 1 1.546.888l3.943 6.843M13.378 9.633l4.096 1.098 1.097-4.096"/>',
+ 'badge':'<path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z"/><path d="m9 12 2 2 4-4"/>',
 }
 C = {'w':'#FFFFFF','m':'#6B7A8D','g':'#1DDB6A','e':'#A8EFC4','r':'#FF5A5F','d':'#0D1B2A'}
 
@@ -165,8 +175,9 @@ HEAD = ('<!DOCTYPE html><html lang="pt-BR"><head><meta charset="utf-8"><title>{t
         '<style>{css}</style></head><body><div class="phone"><div class="notch"></div>')
 TAIL = '</div></body></html>'
 
-def page(fname, title, inner):
-    (OUT / fname).write_text(HEAD.format(title=title, css=CSS) + inner + TAIL, encoding='utf-8')
+def page(fname, title, inner, extra=''):
+    # extra: classes novas da tela, sempre depois do CSS oficial (nunca redefinem as existentes)
+    (OUT / fname).write_text(HEAD.format(title=title, css=CSS + extra) + inner + TAIL, encoding='utf-8')
 
 def stepper(n, name):
     labels = ['Fotos', 'Detalhes', 'Preço e entrega', 'Revisão']
@@ -306,4 +317,180 @@ n006 = f'''<div class="screen" style="gap:13px">
 </div>
 {footer("Publicar anúncio", icon="zap")}'''
 page('006-criar-anuncio-etapa-4-revisao.html', '006 · Criar Anúncio — Revisão e publicação', n006)
+# ================= Telas 049-054 (módulos ESG e Perfil) =================
+def bar(label, value, pct):
+    return (f'<div class="col" style="gap:4px"><div class="row between"><span class="caption">{label}</span>'
+            f'<span class="label-s">{value}</span></div><div class="trilho"><i style="width:{pct}%"></i></div></div>')
+def mrow(icon, title, sub, right=None, color='w', tone='nm', first=False):
+    r = right if right is not None else ic('right', 16, 'm')
+    sep = '' if first else 'border-top:1px solid #1A3250;'
+    return (f'<div class="row" style="gap:12px;padding:11px 14px;{sep}"><div class="nicon {tone}" style="width:34px;height:34px;border-radius:8px">{ic(icon,17,color)}</div>'
+            f'<div class="col grow" style="gap:2px"><span class="label-s">{title}</span><span class="caption">{sub}</span></div>{r}</div>')
+def footer2(primary, second='Voltar', icon=None, second_style=''):
+    i = ic(icon, 18, 'd', 2.2) if icon else ''
+    return f'<div class="footer"><div class="btn secondary" style="{second_style}">{second}</div><div class="btn primary">{i}{primary}</div></div>'
+
+EXTRA_TRILHO = """
+.trilho{height:6px;border-radius:999px;background:#1A3250;position:relative;overflow:hidden}
+.trilho i{position:absolute;left:0;top:0;height:6px;border-radius:999px;background:#1DDB6A;display:block}
+"""
+
+# ---------------- 049 Mapa de Ecopontos (STY058) ----------------
+EXTRA_049 = """
+.mapa{position:relative;width:323px;height:196px;border-radius:12px;background:#11233A;border:1px solid #1A3250;overflow:hidden;flex:none}
+.via{position:absolute;background:#1A3250}
+.quadra{position:absolute;border-radius:4px;background:rgba(255,255,255,0.03)}
+.parque{position:absolute;border-radius:10px;background:rgba(29,219,106,0.08)}
+.raio{position:absolute;border-radius:999px;border:1.5px dashed rgba(29,219,106,0.45);background:rgba(29,219,106,0.04)}
+.eu{position:absolute;width:16px;height:16px;border-radius:999px;background:#1DDB6A;border:3px solid #0D1B2A;box-shadow:0 0 0 6px rgba(29,219,106,0.22)}
+.mpin{position:absolute;width:26px;height:26px;border-radius:999px;background:#0D1B2A;border:2px solid #1DDB6A;display:flex;align-items:center;justify-content:center;font-size:11px;line-height:14px;font-weight:700;color:#1DDB6A}
+.mpin.sel{width:32px;height:32px;background:#1DDB6A;border-color:#0D1B2A;color:#0D1B2A;font-size:13px;line-height:16px}
+.mlabel{position:absolute;height:24px;padding:0 8px;border-radius:999px;background:rgba(13,27,42,0.92);border:1px solid #1A3250;display:flex;align-items:center;font-size:11px;line-height:14px;font-weight:600;color:#FFFFFF;white-space:nowrap}
+.mapctl{position:absolute;right:8px;width:30px;height:30px;border-radius:8px;background:rgba(13,27,42,0.92);border:1px solid #1A3250;display:flex;align-items:center;justify-content:center}
+"""
+mapa = f'''<div class="mapa">
+<div class="quadra" style="left:12px;top:10px;width:70px;height:52px"></div><div class="quadra" style="left:96px;top:10px;width:84px;height:52px"></div>
+<div class="quadra" style="left:12px;top:78px;width:70px;height:60px"></div><div class="parque" style="left:196px;top:10px;width:116px;height:70px"></div>
+<div class="quadra" style="left:196px;top:96px;width:52px;height:88px"></div><div class="quadra" style="left:262px;top:96px;width:50px;height:88px"></div>
+<div class="quadra" style="left:12px;top:154px;width:168px;height:34px"></div><div class="quadra" style="left:96px;top:78px;width:84px;height:60px"></div>
+<div class="via" style="left:0;top:66px;width:323px;height:8px"></div><div class="via" style="left:0;top:142px;width:190px;height:8px"></div>
+<div class="via" style="left:86px;top:0;width:6px;height:196px"></div><div class="via" style="left:184px;top:0;width:8px;height:196px"></div>
+<div class="via" style="left:252px;top:84px;width:6px;height:112px"></div><div class="via" style="left:192px;top:84px;width:131px;height:6px"></div>
+<div class="raio" style="left:44px;top:34px;width:168px;height:168px"></div>
+<div class="eu" style="left:120px;top:110px"></div>
+<div class="mpin sel" style="left:196px;top:118px">1</div><div class="mlabel" style="left:124px;top:160px">Ecoponto Zona 7 · 1,8 km</div>
+<div class="mpin" style="left:58px;top:40px">2</div><div class="mpin" style="left:226px;top:22px">3</div>
+<div class="mapctl" style="top:8px">{ic("plus",15,"w")}</div><div class="mapctl" style="top:44px">{ic("nav",14,"g")}</div>
+</div>'''
+def eco(n, nome, meta, aceita, sel=False):
+    tags = ''.join(f'<span class="tagchip" style="height:22px">{t}</span>' for t in aceita)
+    return (f'<div class="opt{" sel" if sel else ""}"><div class="mpin{" sel" if sel else ""}" style="position:static;flex:none{";width:26px;height:26px;font-size:11px;line-height:14px" if sel else ""}">{n}</div>'
+            f'<div class="col grow" style="gap:4px"><div class="row between"><span class="label-s">{nome}</span>{ic("right",16,"g" if sel else "m")}</div>'
+            f'<span class="row caption" style="gap:6px">{meta}</span><div class="row" style="gap:6px">{tags}</div></div></div>')
+n049 = f'''<div class="screen" style="gap:12px">
+<div class="topbar"><div class="iconbtn">{ic("left",16,"w")}</div><div class="title h2">Ecopontos</div><div class="iconbtn">{ic("sliders",15,"w")}</div></div>
+<div class="row" style="gap:10px"><div class="tile photo" style="width:40px;height:40px">{ic("gpu",20,"m",1.5)}</div>
+<div class="col grow" style="gap:2px"><span class="label-s">GTX 960 2GB · com defeito</span><span class="caption">Anúncio encerrado sem venda · destino: reciclagem</span></div></div>
+{mapa}
+<div class="row between"><span class="label-s">3 pontos aceitam placas de vídeo</span><span class="caption">raio de 10 km</span></div>
+{eco(1,"Ecoponto Zona 7",f'{ic("pin",11,"m")}1,8 km · {ic("clock",11,"g")}<span class="green">Aberto até 18h</span>',["Placas","Cabos","Baterias"],True)}
+{eco(2,"Coleta do fabricante",f'{ic("mail",11,"m")}Envio gratuito pelos Correios',["Placas","Periféricos"])}
+<div class="info esgbox" style="padding:10px 12px"><div style="margin-top:1px">{ic("alert",15,"e")}</div><span class="small">Antes de levar, retire pilhas e baterias. Confirme o descarte em até 30 dias para contar no seu impacto ESG.</span></div>
+</div>
+{footer2("Ver rota", second="Doar a uma ONG", icon="nav")}'''
+page('049-mapa-de-ecopontos.html', '049 · Mapa de Ecopontos', n049, EXTRA_049)
+
+# ---------------- 050 Dashboard ESG Pessoal (STY054) ----------------
+EXTRA_050 = EXTRA_TRILHO + """
+.kpi{flex:1;min-width:0;padding:12px;border-radius:12px;border:1px solid #1A3250;background:#11233A;display:flex;flex-direction:column;gap:6px}
+.grafico{height:72px;display:flex;align-items:flex-end;gap:8px;padding:0 2px}
+.grafico div{flex:1;border-radius:4px 4px 0 0;background:rgba(29,219,106,0.35)}
+.grafico div.on{background:#1DDB6A}
+.meses{display:flex;gap:8px;padding:0 2px}
+.meses span{flex:1;text-align:center;font-size:11px;line-height:14px;font-weight:500;color:#6B7A8D}
+"""
+alturas = [14, 22, 17, 33, 28, 42, 36, 52, 46, 64]
+meses = ['fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov']
+graf = ''.join(f'<div class="{"on" if i == len(alturas)-1 else ""}" style="height:{h}px"></div>' for i, h in enumerate(alturas))
+mlab = ''.join(f'<span>{m[0].upper()}</span>' for m in meses)
+def kpi(icon, valor, nome, color='e'):
+    return (f'<div class="kpi">{ic(icon,18,color)}<span class="h2" style="font-size:18px">{valor}</span>'
+            f'<span class="caption">{nome}</span></div>')
+n050 = f'''<div class="screen" style="gap:12px">
+<div class="topbar"><div class="iconbtn">{ic("left",16,"w")}</div><div class="title h2">Meu impacto ESG</div><div class="iconbtn">{ic("info",16,"w")}</div></div>
+<div class="chips"><div class="chip">Este mês</div><div class="chip">3 meses</div><div class="chip on">12 meses</div><div class="chip">Desde o início</div></div>
+<div class="info esgbox" style="flex-direction:column;gap:6px;align-items:stretch;padding:14px 16px;border-radius:18px">
+<div class="row between"><span class="caption esg" style="letter-spacing:0.6px">RESÍDUO ELETRÔNICO EVITADO</span>{ic("recycle",18,"e")}</div>
+<div class="row" style="gap:10px;align-items:baseline"><span class="big-price">7,4 kg</span><span class="label-s green">+1,2 kg em nov</span></div>
+<span class="small">Mais que 72% da comunidade Steely na sua região.</span></div>
+<div class="row" style="gap:8px;align-items:stretch">{kpi("cloud","38 kg","CO₂ evitado")}{kpi("gem","212 g","Minerais preservados")}{kpi("recycle","9","Itens reaproveitados")}</div>
+<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px">
+<div class="row between"><span class="label-s">Evolução mensal (kg)</span><span class="caption">fev – nov 2026</span></div>
+<div class="grafico">{graf}</div><div class="meses">{mlab}</div></div>
+<div class="col" style="gap:8px">
+<div class="row between"><span class="label-s">Como você chegou aqui</span><span class="caption">11 transações</span></div>
+{bar("Vendas de peças usadas","5,1 kg",69)}{bar("Doação a ONGs (2)","1,6 kg",22)}{bar("Descarte em ecoponto (1)","0,7 kg*",9)}</div>
+<div class="hint">{ic("info",13,"m")}<span>* Estimativa pela média da categoria. Metodologia v1.2 · <span class="green">ver cálculo</span></span></div>
+</div>
+<div class="footer"><div class="btn primary">{ic("badge",18,"d",2.2)}Compartilhar certificado</div></div>'''
+page('050-dashboard-esg-pessoal.html', '050 · Dashboard ESG Pessoal', n050, EXTRA_050)
+
+# ---------------- 051 Doar para ONG (STY041 / STY058-RN02) ----------------
+n051 = f'''<div class="screen" style="gap:12px">
+<div class="topbar"><div class="iconbtn">{ic("left",16,"w")}</div><div class="title h2">Doar para ONG</div><div class="spacer32"></div></div>
+<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px">
+<div class="row" style="gap:12px"><div class="nicon ne" style="width:44px;height:44px">{ic("users",22,"e")}</div>
+<div class="col grow" style="gap:2px"><span class="label-s">Instituto Bits do Bem</span><span class="row caption green" style="gap:4px">{ic("badge",13,"g")}ONG verificada · 4,2 km</span></div></div>
+<span class="h3">Computadores para o laboratório de robótica</span>
+<div class="row" style="gap:6px;flex-wrap:wrap"><span class="tagchip" style="height:22px">Placas de vídeo</span><span class="tagchip" style="height:22px">Memórias</span><span class="tagchip" style="height:22px">Mín. 2 GB</span></div>
+{bar("Itens recebidos","3 de 8",38)}
+<span class="row caption" style="gap:6px">{ic("clock",12,"m")}Pedido aberto até 15/01/2027 · 60 dias no mural</span></div>
+<div class="field"><span class="flabel">Item que você vai doar <b>*</b></span>
+<div class="opt sel" style="align-items:center"><div class="radio" style="margin:0"><i></i></div><div class="tile photo" style="width:36px;height:36px">{ic("gpu",18,"m",1.5)}</div>
+<div class="col grow" style="gap:2px"><span class="label-s">GTX 960 2GB</span><span class="caption green">Compatível com o pedido</span></div></div>
+<div class="opt" style="align-items:center"><div class="radio" style="margin:0"></div><div class="tile photo" style="width:36px;height:36px">{ic("memory",18,"m",1.5)}</div>
+<div class="col grow" style="gap:2px"><span class="label-s">Kit 4GB DDR3</span><span class="caption">Compatível · anúncio pausado</span></div></div></div>
+<div class="field"><span class="flabel">Como entregar <b>*</b></span>
+<div class="opt sel" style="align-items:center"><div class="radio" style="margin:0"><i></i></div><div class="col grow" style="gap:2px"><span class="label-s">Levar até a ONG</span><span class="caption">Confirmação por QR Code na entrega</span></div>{ic("qr",18,"g")}</div></div>
+<div class="info esgbox" style="padding:10px 12px"><div style="margin-top:1px">{ic("leaf",15,"e")}</div><span class="small">Após a entrega, você recebe o Termo de Doação em PDF e o item entra no seu impacto ESG.</span></div>
+</div>
+{footer2("Oferecer doação", icon="heart")}'''
+page('051-doar-para-ong.html', '051 · Doar para ONG', n051, EXTRA_TRILHO)
+
+# ---------------- 052 Meu Perfil (STY011) ----------------
+estrelas = ''.join(ic("star", 13, "g") for _ in range(5))
+n052 = f'''<div class="screen" style="gap:12px">
+<div class="row between" style="height:32px"><span class="h1">Perfil</span><div class="iconbtn">{ic("pencil",15,"w")}</div></div>
+<div class="row" style="gap:14px"><div class="avatar" style="width:64px;height:64px;border-width:2px">{ic("user",30,"w",1.75)}</div>
+<div class="col grow" style="gap:3px"><span class="h2">Rafael T.</span><span class="row caption" style="gap:5px">{ic("pin",11,"m")}Zona 7, Maringá · desde mar/2026</span>
+<span class="row caption green" style="gap:4px">{ic("badge",12,"g")}E-mail verificado · 2FA ativo</span></div></div>
+<div class="card" style="padding:14px;display:flex;flex-direction:column;gap:10px">
+<div class="row" style="gap:12px"><span class="big-price">4,8</span><div class="col grow" style="gap:3px"><div class="row" style="gap:2px">{estrelas}</div><span class="caption">23 avaliações · 31 negociações</span></div></div>
+{bar("Comunicação","4,9",98)}{bar("Pontualidade","4,6",92)}{bar("Fidelidade do anúncio","4,8",96)}</div>
+<div class="col" style="gap:8px"><span class="label-s">Selos ESG</span><div class="row" style="gap:6px">
+<span class="tagchip" style="background:rgba(168,239,196,0.14);color:#A8EFC4">{ic("recycle",12,"e")}Reciclador</span>
+<span class="tagchip" style="background:rgba(168,239,196,0.14);color:#A8EFC4">{ic("heart",12,"e")}Doador</span>
+<span class="tagchip" style="background:rgba(168,239,196,0.14);color:#A8EFC4">{ic("leaf",12,"e")}7,4 kg evitados</span></div></div>
+<div class="card" style="overflow:hidden">
+{mrow("tag","Meus anúncios","3 ativos · 1 pausado",first=True)}{mrow("coins","Carteira","340 moedas disponíveis")}{mrow("leaf","Meu impacto ESG","Ver dashboard e certificado",color="e",tone="ne")}{mrow("shield","Segurança da conta","Senha, 2FA e sessões")}</div>
+</div>
+<div class="nav">{navitem("home","Início")}{navitem("search","Buscar")}<div class="navitem add"><div class="fab">{ic("plus",22,"d",2.4)}</div><span>Anunciar</span></div>{navitem("msg","Chat")}{navitem("user","Perfil",True)}</div>'''
+page('052-meu-perfil.html', '052 · Meu Perfil', n052, EXTRA_TRILHO)
+
+# ---------------- 053 Editar Perfil (STY011 / Manter geral) ----------------
+n053 = f'''<div class="screen" style="gap:12px">
+<div class="topbar"><div class="iconbtn">{ic("x",16,"w")}</div><div class="title h2">Editar perfil</div><div class="spacer32"></div></div>
+<div class="col" style="align-items:center;gap:8px"><div style="position:relative"><div class="avatar" style="width:76px;height:76px;border-width:2px">{ic("user",34,"w",1.75)}</div>
+<div class="tile" style="position:absolute;right:-2px;bottom:-2px;width:28px;height:28px;border-radius:999px;background:#1DDB6A;border:3px solid #0D1B2A">{ic("camera",13,"d",2.2)}</div></div>
+<span class="label-s green">Alterar foto</span></div>
+<div class="field"><span class="flabel">Nome de exibição <b>*</b></span><div class="input focus">Rafael T.</div>
+<div class="hint">{ic("info",13,"m")}<span>Aparece no perfil, nos anúncios e no chat.</span></div></div>
+<div class="field"><div class="row between"><span class="flabel">Sobre você</span><span class="caption">74/160</span></div>
+<div class="input textarea" style="min-height:64px;padding:12px 16px">Monto PCs há 6 anos. Peças testadas e com nota de procedência.</div></div>
+<div class="field"><span class="flabel">Região <b>*</b></span><div class="input between"><span class="row" style="gap:8px">{ic("pin",16,"g")}Zona 7, Maringá – PR</span>{ic("down",16,"m")}</div>
+<div class="hint">{ic("eye",13,"m")}<span>Só o bairro aparece. Telefone, e-mail e endereço nunca ficam públicos.</span></div></div>
+<div class="field"><span class="flabel">E-mail</span><div class="input between" style="background:rgba(107,122,141,0.08)"><span class="row muted" style="gap:8px">{ic("lock",15,"m")}ra•••••@email.com</span><span class="tagchip" style="height:22px">{ic("check",11,"g",2.5)}Verificado</span></div></div>
+</div>
+{footer2("Salvar alterações", second="Cancelar", icon="check")}'''
+page('053-editar-perfil.html', '053 · Editar Perfil', n053)
+
+# ---------------- 054 Configurações de Segurança (STY007/008/009) ----------------
+n054 = f'''<div class="screen" style="gap:12px">
+<div class="topbar"><div class="iconbtn">{ic("left",16,"w")}</div><div class="title h2">Segurança</div><div class="spacer32"></div></div>
+<div class="info" style="padding:14px;border-radius:18px;align-items:center"><div class="tile" style="width:44px;height:44px;background:rgba(29,219,106,0.12)">{ic("shield",22,"g",1.75)}</div>
+<div class="col grow" style="gap:2px"><span class="h3">Sua conta está protegida</span><span class="small">2FA ativo · senha trocada há 2 meses</span></div></div>
+<span class="group">Acesso</span>
+<div class="card" style="overflow:hidden">
+{mrow("phone","Verificação em duas etapas","Aplicativo autenticador",right='<div class="toggle"><i></i></div>',color="g",tone="ng",first=True)}
+{mrow("lock","Alterar senha","Mínimo de 10 caracteres")}{mrow("sparkles","Códigos de recuperação","Gerar um novo conjunto")}</div>
+<div class="row between"><span class="group">Sessões ativas</span><span class="caption">2 aparelhos</span></div>
+<div class="card" style="overflow:hidden">
+{mrow("phone","iPhone 13 · este aparelho","Maringá, PR · agora",right='<span class="tagchip" style="height:22px">Atual</span>',color="g",tone="ng",first=True)}
+{mrow("cpu","Chrome no Windows","Maringá, PR · há 3 dias",right='<span class="label-s red">Encerrar</span>')}</div>
+<div class="btn secondary" style="color:#FF5A5F;border-color:rgba(255,90,95,0.35)">{ic("logout",17,"r")}Sair de todos os aparelhos</div>
+<div class="hint">{ic("mail",13,"m")}<span>Toda mudança de senha, 2FA ou sessão é registrada e avisada por e-mail.</span></div>
+<div class="row between" style="padding-top:2px"><span class="label-s red">Solicitar exclusão da conta</span>{ic("right",16,"r")}</div>
+</div>'''
+page('054-configuracoes-de-seguranca.html', '054 · Configurações de Segurança', n054)
+
 print('ok', sorted(p.name for p in OUT.glob('*.html')))
