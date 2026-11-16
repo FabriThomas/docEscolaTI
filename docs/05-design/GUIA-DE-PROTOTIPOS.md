@@ -494,12 +494,12 @@ Nos dois casos, a aba **Checks** do PR roda os mesmos verificadores. O PR só po
 | 046 | Termos de Uso | EDTS-297 | 141633 | `046-termos-de-uso.html` | a fazer |
 | 047 | Política de Privacidade | EDTS-298 | 144003 | `047-politica-de-privacidade.html` | a fazer |
 | 048 | Central de Ajuda / FAQ | EDTS-299 | 146373 | `048-central-de-ajuda-faq.html` | a fazer |
-| 049 | Mapa de Ecopontos | EDTS-300 | 148743 | `049-mapa-de-ecopontos.html` | a fazer |
-| 050 | Dashboard ESG Pessoal | EDTS-301 | 151113 | `050-dashboard-esg-pessoal.html` | a fazer |
-| 051 | Doar para ONG | EDTS-302 | 153483 | `051-doar-para-ong.html` | a fazer |
-| 052 | Meu Perfil | EDTS-303 | 155853 | `052-meu-perfil.html` | a fazer |
-| 053 | Editar Perfil | EDTS-304 | 158223 | `053-editar-perfil.html` | a fazer |
-| 054 | Configurações de Segurança | EDTS-305 | 160593 | `054-configuracoes-de-seguranca.html` | a fazer |
+| 049 | Mapa de Ecopontos | EDTS-300 | 148743 | [`049-mapa-de-ecopontos.html`](prototipos/html/049-mapa-de-ecopontos.html) | ✅ pronta |
+| 050 | Dashboard ESG Pessoal | EDTS-301 | 151113 | [`050-dashboard-esg-pessoal.html`](prototipos/html/050-dashboard-esg-pessoal.html) | ✅ pronta |
+| 051 | Doar para ONG | EDTS-302 | 153483 | [`051-doar-para-ong.html`](prototipos/html/051-doar-para-ong.html) | ✅ pronta |
+| 052 | Meu Perfil | EDTS-303 | 155853 | [`052-meu-perfil.html`](prototipos/html/052-meu-perfil.html) | ✅ pronta |
+| 053 | Editar Perfil | EDTS-304 | 158223 | [`053-editar-perfil.html`](prototipos/html/053-editar-perfil.html) | ✅ pronta |
+| 054 | Configurações de Segurança | EDTS-305 | 160593 | [`054-configuracoes-de-seguranca.html`](prototipos/html/054-configuracoes-de-seguranca.html) | ✅ pronta |
 | 055 | Avaliar Usuário | EDTS-306 | 162963 | `055-avaliar-usuario.html` | a fazer |
 | 056 | Solicitar Exclusão de Conta | EDTS-307 | 165333 | `056-solicitar-exclusao-de-conta.html` | a fazer |
 | 057 | Realizar Denúncia | EDTS-308 | 167703 | `057-realizar-denuncia.html` | a fazer |

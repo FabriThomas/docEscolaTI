@@ -31,6 +31,17 @@ Geradas em HTML por [`ferramentas/prototipos/gerar_telas.py`](../../../ferrament
 | 005 | [Criar Anúncio — Preço e entrega](html/005-criar-anuncio-etapa-3-preco-e-entrega.html) | EDTS-256 | STY016 | <img src="png/005-criar-anuncio-etapa-3-preco-e-entrega.png" width="180"> |
 | 006 | [Criar Anúncio — Revisão](html/006-criar-anuncio-etapa-4-revisao.html) | EDTS-257 | STY016 | <img src="png/006-criar-anuncio-etapa-4-revisao.png" width="180"> |
 
+## Sprint 13 — ESG e perfil
+
+| Nº | Tela | Jira | Casos de uso | |
+|---|---|---|---|---|
+| 049 | [Mapa de Ecopontos](html/049-mapa-de-ecopontos.html) | EDTS-300 | STY058, STY029 | <img src="png/049-mapa-de-ecopontos.png" width="180"> |
+| 050 | [Dashboard ESG Pessoal](html/050-dashboard-esg-pessoal.html) | EDTS-301 | STY054 | <img src="png/050-dashboard-esg-pessoal.png" width="180"> |
+| 051 | [Doar para ONG](html/051-doar-para-ong.html) | EDTS-302 | STY041, STY058 | <img src="png/051-doar-para-ong.png" width="180"> |
+| 052 | [Meu Perfil](html/052-meu-perfil.html) | EDTS-303 | STY011 | <img src="png/052-meu-perfil.png" width="180"> |
+| 053 | [Editar Perfil](html/053-editar-perfil.html) | EDTS-304 | STY011 | <img src="png/053-editar-perfil.png" width="180"> |
+| 054 | [Configurações de Segurança](html/054-configuracoes-de-seguranca.html) | EDTS-305 | STY007, STY008, STY009 | <img src="png/054-configuracoes-de-seguranca.png" width="180"> |
+
 ## Histórico — versões anteriores
 
 Primeiras versões das telas de autenticação, anexadas nas tarefas de prototipagem do Jira. Ficam aqui para mostrar a evolução do design; a versão atual é a da seção [Autenticação](#autenticação-versão-de-13092026).
