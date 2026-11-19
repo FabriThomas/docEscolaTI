@@ -103,7 +103,7 @@ CREATE OR REPLACE FUNCTION private.compute_audit_system_hash()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, private, audit, pg_temp
+SET search_path = public, private, audit, extensions, pg_temp
 AS $$
 DECLARE
     v_prev_hash CHAR(64);
@@ -137,7 +137,7 @@ CREATE OR REPLACE FUNCTION private.compute_audit_financial_hash()
 RETURNS TRIGGER
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, private, audit, pg_temp
+SET search_path = public, private, audit, extensions, pg_temp
 AS $$
 DECLARE
     v_prev_hash CHAR(64);
@@ -179,7 +179,7 @@ CREATE OR REPLACE FUNCTION private.audit_log(
 RETURNS UUID
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, private, audit, pg_temp
+SET search_path = public, private, audit, extensions, pg_temp
 AS $$
 DECLARE
     v_log_id UUID;
@@ -226,7 +226,7 @@ CREATE OR REPLACE FUNCTION private.audit_verify(p_trail TEXT DEFAULT 'FINANCIAL'
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, private, audit, pg_temp
+SET search_path = public, private, audit, extensions, pg_temp
 AS $$
 DECLARE
     v_expected_prev CHAR(64) := repeat('0', 64);
@@ -358,7 +358,7 @@ CREATE OR REPLACE FUNCTION private.register_arbitration_approval(
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, escrow, private, audit, pg_temp
+SET search_path = public, escrow, private, audit, extensions, pg_temp
 AS $$
 DECLARE
     v_dispute RECORD;
@@ -507,7 +507,7 @@ CREATE OR REPLACE FUNCTION private.request_account_deletion(p_user_id UUID)
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, escrow, private, audit, pg_temp
+SET search_path = public, escrow, private, audit, extensions, pg_temp
 AS $$
 DECLARE
     v_effective TIMESTAMPTZ := NOW() + INTERVAL '30 days';
@@ -567,7 +567,7 @@ CREATE OR REPLACE FUNCTION private.anonimizar_usuario(p_user_id UUID)
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, escrow, private, audit, pg_temp
+SET search_path = public, escrow, private, audit, extensions, pg_temp
 AS $$
 DECLARE
     v_user RECORD;
@@ -719,7 +719,7 @@ CREATE OR REPLACE FUNCTION private.run_qa_sec_validation_suite()
 RETURNS JSONB
 LANGUAGE plpgsql
 SECURITY DEFINER
-SET search_path = public, escrow, private, audit, pg_temp
+SET search_path = public, escrow, private, audit, extensions, pg_temp
 AS $$
 DECLARE
     v_buyer UUID := gen_random_uuid();
