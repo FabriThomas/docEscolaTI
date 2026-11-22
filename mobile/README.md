@@ -1,0 +1,28 @@
+# Mobile — App Android
+
+[← Início](../README.md)
+
+Aplicativo Android do Steely: anunciar com o Scanner IA, negociar pelo chat, ir até o ponto de encontro e confirmar a entrega com QR Code, mesmo sem internet.
+
+| | |
+|---|---|
+| **Tecnologia** | Expo (React Native) |
+| **Offline** | WatermelonDB, com sincronização em segundo plano |
+| **Mapas** | Google Routes API |
+
+## Decisões que se aplicam aqui
+
+| ADR | Assunto |
+|---|---|
+| [ADR-23](../02-adrs/md/ADR-23_Offline_First.md) | Offline-first |
+| [ADR-24](../02-adrs/md/ADR-24_Armazenamento_Seguro_no_Dispositivo.md) | Armazenamento seguro de chaves e tokens |
+| [ADR-25](../02-adrs/md/ADR-25_Notificacoes_Push.md) | Notificações push |
+| [ADR-26](../02-adrs/md/ADR-26_Provedor_de_Mapas_e_Rotas.md) | Provedor de mapas e rotas |
+| [ADR-27](../02-adrs/md/ADR-27_Captura_e_Compressao_de_Imagem.md) | Captura e compressão de imagem (WebP) |
+| [ADR-19](../02-adrs/md/ADR-19_Validacao_e_Schemas_Compartilhados.md) | Design system compartilhado com a web |
+
+Telas de referência: [docs/05-design/prototipos](../docs/05-design/prototipos/).
+
+## Código
+
+*Ainda não adicionado a este repositório.*
