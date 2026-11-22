@@ -1,8 +1,18 @@
-# 🛠️ Projeto Steely — Documentação de Engenharia, Arquitetura e ADRs
+<a href="https://rafaeltudelar.github.io/steely/"><img src=".github/assets/banner.svg" alt="Steely — hardware usado, com laudo de IA" width="100%"></a>
+
+<p align="center">
+  <a href=".github/workflows/verificacoes.yml"><img alt="Verificações" src="https://github.com/rafaeltudelar/steely/actions/workflows/verificacoes.yml/badge.svg"></a>
+  <img alt="Status: em desenvolvimento" src="https://img.shields.io/badge/status-em%20desenvolvimento-1DDB6A?labelColor=0D1B2A">
+  <img alt="Sprints 7 a 16" src="https://img.shields.io/badge/sprints-7%E2%80%9316-A8EFC4?labelColor=0D1B2A">
+  <a href="LICENSE"><img alt="Código: MIT" src="https://img.shields.io/badge/c%C3%B3digo-MIT-6B7A8D?labelColor=0D1B2A"></a>
+  <a href="LICENSE-DOCS.md"><img alt="Docs: CC BY 4.0" src="https://img.shields.io/badge/docs-CC%20BY%204.0-6B7A8D?labelColor=0D1B2A"></a>
+</p>
+
+# 🛠️ Steely — Monorepo de Engenharia, Arquitetura, Banco e Protótipos
 
 > **Disciplina:** Escola de TI · Engenharia de Software · UniCesumar (2026 — **Turma B · Equipe 6**)  
 > **Professor:** Enderson Menezes  
-> **Status dos Artefatos:** 100% Consolidados em Markdown (`.md`) + Arquivos Originais (`.pdf`, `.xlsx`, `.png`)
+> **Status:** Em desenvolvimento (2º semestre de 2026 — Sprints 7–16). Documentação consolidada + Banco Supabase + Protótipos + Backend FastAPI.
 
 O **Steely** é um ecossistema digital web e mobile (Android) para comercialização segura, doação institucional e reciclagem (economia circular) de componentes de hardware de TI. Combina **Visão Computacional (Scanner IA)** para triagem técnica, **gamificação em moedas virtuais** (**Hardware Captcha** e **Laudos Técnicos**), **logística presencial offline-first** validada por **QR Code `Ed25519`** (`≤ 150 ms`), **custódia de 7 dias (*Escrow Simulado*)**, **métricas de impacto ESG** e **inteligência de mercado anonimizada (DaaS com *k-anonimato* `k ≥ 30`)**.
 
@@ -20,39 +30,44 @@ O **Steely** é um ecossistema digital web e mobile (Android) para comercializa�
 
 ---
 
-## 🗺️ Mapa de Navegação dos Artefatos (Checklist da Disciplina)
+## 🗺️ Mapa de Navegação do Monorepo
 
-Todos os documentos estão disponíveis nativamente em **Markdown (`.md`)** para leitura direta no GitHub e avaliação automatizada, acompanhados dos respectivos **arquivos originais (`.pdf` e `.xlsx`)**:
+| Pasta | Conteúdo |
+|---|---|
+| [`01-planejamento/`](01-planejamento/README.md) | TAP, Requisitos (`RF-01..21`, `RNF-01..13`), Regras de Negócio, Casos de Uso, DER (66 tabelas), Classes, BPMN e originais (`.pdf`, `.xlsx`, `.docx`, `matrizes/`) |
+| [`02-adrs/`](02-adrs/README.md) | Consolidação completa dos **27 ADRs** (`ADR-01` a `ADR-27`) em `.md` e `.pdf` |
+| [`03-sdlc-e-governanca/`](03-sdlc-e-governanca/README.md) | Processo SDLC, Backlog/Sprints no Jira (`EDTS`) e Roadmap do Scanner IA |
+| [`docs/05-design/`](docs/05-design/README.md) | Manual da marca (`brand-guidelines.pdf`) e protótipos de alta fidelidade (`PROTOTIPAGEM_001..059`) |
+| [`docs/historico/`](docs/historico/README.md) | Documentos do 1º semestre (versão anterior do produto) |
+| [`supabase/`](supabase/config.toml) | Migrations SQL (`0001` a `0005`), `config.toml` e validadores automatizados |
+| [`backend/`](backend/README.md) | Core API — Python 3.12 + FastAPI (`/api/v1`) |
+| [`web/`](web/README.md) | Aplicação web — React + Vite |
+| [`mobile/`](mobile/README.md) | Aplicativo Android — Expo |
+| [`database/`](database/README.md) | Guia de banco de dados |
+| [`scanner/`](scanner/README.md) | Scanner IA — visão computacional |
+| [`ferramentas/`](ferramentas/verificar_links.py) | Scripts de geração e verificação de telas e links |
+| [`site/`](site/README.md) | Site do projeto (GitHub Pages) com cena 3D e protótipos navegáveis |
 
-### 1️⃣ Fase de Planejamento e Modelagem ([`01-planejamento/`](01-planejamento/README.md))
-- [x] **Termo de Abertura do Projeto (TAP):** [`01-planejamento/TAP_Termo_de_Abertura.md`](01-planejamento/TAP_Termo_de_Abertura.md) · ([PDF](01-planejamento/originais/TAP_Steely.pdf))
-- [x] **Requisitos Funcionais (`RF-01..21`) e Não Funcionais (`RNF-01..13`):** [`01-planejamento/Requisitos_Steely.md`](01-planejamento/Requisitos_Steely.md) · ([PDF](01-planejamento/originais/Documento_de_Requisitos.pdf))
-- [x] **Regras de Negócio (`RB-01..15` e regras por Story):** [`01-planejamento/Regras_de_Negocio.md`](01-planejamento/Regras_de_Negocio.md) · ([PDF](01-planejamento/originais/Documento_de_Regras_de_Negocio.pdf) | [XLSX](01-planejamento/originais/Regras_de_Negocio_Steely_v1.xlsx))
-- [x] **Especificação de Casos de Uso (`UC-01..16` e 61 abas `STY001..STY058`):** [`01-planejamento/Especificacao_de_Casos_de_Uso.md`](01-planejamento/Especificacao_de_Casos_de_Uso.md) · ([PDF](01-planejamento/originais/Documento_de_Casos_de_Uso.pdf) | [XLSX](01-planejamento/originais/Especificacao_Casos_de_Uso_Steely.xlsx))
-- [x] **Diagrama de Casos de Uso:** [`01-planejamento/Diagrama_de_Casos_de_Uso.md`](01-planejamento/Diagrama_de_Casos_de_Uso.md) · ([PDF](01-planejamento/originais/Diagrama_de_Casos_de_Uso.pdf))
-- [x] **Diagrama Entidade-Relacionamento (DER — 66 tabelas em 6 pacotes e 6 schemas):** [`01-planejamento/DER_Modelo_de_Dados.md`](01-planejamento/DER_Modelo_de_Dados.md) · ([PDF](01-planejamento/originais/DER_Steely.pdf))
-- [x] **Diagrama de Classes (95 elementos em 6 pacotes + Padrões GoF Composite, Facade e Proxy):** [`01-planejamento/Diagrama_de_Classes.md`](01-planejamento/Diagrama_de_Classes.md) · ([PDF](01-planejamento/originais/Diagrama_de_Classes_Steely.pdf))
-- [x] **Diagrama de Atividades / Processos BPMN (`N0`, `P1`, `P2`, `P34`, `P5`, `P5b`, `P6a`, `P6b`, `P6c`):** [`01-planejamento/Diagrama_de_Atividades_BPMN.md`](01-planejamento/Diagrama_de_Atividades_BPMN.md) · ([PDF](01-planejamento/originais/Diagrama_de_Fluxo_BPMN.pdf))
+---
 
-### 2️⃣ Fase de Pré-Código — Consolidação de ADRs ([`02-adrs/`](02-adrs/README.md))
-- [x] **Índice Geral dos 27 ADRs:** [`02-adrs/README.md`](02-adrs/README.md)
-- [x] **ADRs 01 e 02 (IA e Anti-Fuga):** [`ADR-01`](02-adrs/md/ADR-01_Motor_do_Scanner_IA.md) · [`ADR-02`](02-adrs/md/ADR-02_Censura_de_Dados_Pessoais_e_Contatos.md)
-- [x] **ADRs 03 a 07 (Escrow, DaaS, Auditoria, Arbitragem e LGPD):** [`ADR-03`](02-adrs/md/ADR-03_Escrow_Simulado.md) · [`ADR-04`](02-adrs/md/ADR-04_Anonimizacao_e_Agregacao_do_DaaS.md) · [`ADR-05`](02-adrs/md/ADR-05_Trilha_de_Auditoria_Imutavel.md) · [`ADR-06`](02-adrs/md/ADR-06_Fluxo_de_Arbitragem_de_Disputas.md) · [`ADR-07`](02-adrs/md/ADR-07_Anonimizacao_em_30_Dias_LGPD.md)
-- [x] **ADRs 08 a 12 (Banco, Autorização, Ledger, Imagens e Limiares IA):** [`ADR-08`](02-adrs/md/ADR-08_Banco_Principal.md) · [`ADR-09`](02-adrs/md/ADR-09_Onde_Fica_a_Autorizacao.md) · [`ADR-10`](02-adrs/md/ADR-10_Ledger_de_Moedas.md) · [`ADR-11`](02-adrs/md/ADR-11_Armazenamento_de_Imagens.md) · [`ADR-12`](02-adrs/md/ADR-12_Limiar_de_Confianca_do_Scanner.md)
-- [x] **ADRs 13 a 17 (Contrato API, Idempotência, Leilão, Jobs `pg_cron` e Testes):** [`ADR-13`](02-adrs/md/ADR-13_Contrato_e_Versionamento_da_API.md) · [`ADR-14`](02-adrs/md/ADR-14_Idempotencia.md) · [`ADR-15`](02-adrs/md/ADR-15_Concorrencia_dos_Lances.md) · [`ADR-16`](02-adrs/md/ADR-16_Tarefas_Agendadas.md) · [`ADR-17`](02-adrs/md/ADR-17_Estrategia_de_Testes.md)
-- [x] **ADRs 18 a 22 (Frontend Web, Design System/Zod, A11y, Captcha e ESG):** [`ADR-18`](02-adrs/md/ADR-18_Gerenciamento_de_Estado_e_Dados_no_Cliente.md) · [`ADR-19`](02-adrs/md/ADR-19_Validacao_e_Schemas_Compartilhados.md) · [`ADR-20`](02-adrs/md/ADR-20_Estrategia_de_Renderizacao_Web.md) · [`ADR-21`](02-adrs/md/ADR-21_Integracao_de_Captcha.md) · [`ADR-22`](02-adrs/md/ADR-22_Agregacao_de_Metricas_ESG.md)
-- [x] **ADRs 23 a 27 (Mobile Android Offline-First, SecureStore, Push, Mapas e Imagem):** [`ADR-23`](02-adrs/md/ADR-23_Offline_First.md) · [`ADR-24`](02-adrs/md/ADR-24_Armazenamento_Seguro_no_Dispositivo.md) · [`ADR-25`](02-adrs/md/ADR-25_Notificacoes_Push.md) · [`ADR-26`](02-adrs/md/ADR-26_Provedor_de_Mapas_e_Rotas.md) · [`ADR-27`](02-adrs/md/ADR-27_Captura_e_Compressao_de_Imagem.md)
+## 🎨 Protótipos de Alta Fidelidade
 
-- [x] **Protótipo de Alta Fidelidade (Catálogo das 59 Telas `PROTOTIPAGEM_001..059`):** [`01-planejamento/Prototipo_Alta_Fidelidade_Telas.md`](01-planejamento/Prototipo_Alta_Fidelidade_Telas.md)
+Protótipos navegáveis da Sprint 13 — [todas as telas](docs/05-design/prototipos/README.md) · [como fazer uma tela nova](docs/05-design/PASSO-A-PASSO-SIMPLES.md) ([guia completo](docs/05-design/GUIA-DE-PROTOTIPOS.md)).
 
-### 3️⃣ Processo de Desenvolvimento, Jira (`EDTS`) e Governança SDLC ([`03-sdlc-e-governanca/`](03-sdlc-e-governanca/README.md))
-- [x] **Gestão do SDLC (Fluxo Scrum, Multi-Repo, Branches `main`/`dev`, PRs, CI Progressivo e DoD):** [`03-sdlc-e-governanca/Processo_de_Desenvolvimento_SDLC.md`](03-sdlc-e-governanca/Processo_de_Desenvolvimento_SDLC.md)
-- [x] **Estrutura do Jira (`EDTS` — 8 Épicos, 16 Sprints, Multi-Tags e Planejamento de 1.000h no Clockify):** [`03-sdlc-e-governanca/Estrutura_Backlog_e_Sprints_Jira.md`](03-sdlc-e-governanca/Estrutura_Backlog_e_Sprints_Jira.md)
-- [x] **Roadmap de Engenharia e Métricas do Scanner IA (`Sprints 12 → 16`):** [`03-sdlc-e-governanca/Roadmap_Engenharia_Scanner_IA.md`](03-sdlc-e-governanca/Roadmap_Engenharia_Scanner_IA.md)
+<p align="center">
+  <img src="docs/05-design/prototipos/png/001-home-feed.png" width="15%" alt="Home">
+  <img src="docs/05-design/prototipos/png/002-central-de-notificacoes.png" width="15%" alt="Notificações">
+  <img src="docs/05-design/prototipos/png/003-criar-anuncio-etapa-1-fotos.png" width="15%" alt="Criar anúncio: fotos">
+  <img src="docs/05-design/prototipos/png/004-criar-anuncio-etapa-2-detalhes.png" width="15%" alt="Criar anúncio: detalhes">
+  <img src="docs/05-design/prototipos/png/005-criar-anuncio-etapa-3-preco-e-entrega.png" width="15%" alt="Criar anúncio: preço e entrega">
+  <img src="docs/05-design/prototipos/png/006-criar-anuncio-etapa-4-revisao.png" width="15%" alt="Criar anúncio: revisão">
+</p>
 
 ---
 
 ## 🏗️ Visão Geral da Arquitetura (Custo R$ 0)
+
+App **Expo** (Android) e SPA **React + Vite** (web) consomem uma API **FastAPI** (Python), que usa **Supabase** (PostgreSQL, Auth, Realtime, Storage) como banco e infraestrutura; o Scanner IA roda como um serviço separado com modelos **ONNX**.
 
 ```mermaid
 flowchart TB
@@ -71,8 +86,8 @@ flowchart TB
     end
 
     subgraph Dados["Camada de Dados (Supabase PostgreSQL 15)"]
-        CORE[("Supabase Projeto 1 — Core (64 tabelas)<br/>Schemas: public, private, escrow, audit, esg<br/>RLS + SECURITY DEFINER + pg_cron + pg_net (ADR-03, 05..10, 14..16)")]
-        DAAS[("Supabase Projeto 2 — DaaS Isolado (2 tabelas)<br/>Schema: daas (k >= 30 e >= 3 vendedores) (ADR-04, 08)")]
+        CORE[("Supabase Projeto 1 — Core<br/>Schemas: public, private, escrow, audit, esg<br/>RLS + SECURITY DEFINER + pg_cron + pg_net (ADR-03, 05..10, 14..16)")]
+        DAAS[("Supabase Projeto 2 — DaaS Isolado<br/>Schema: daas (k >= 30 e >= 3 vendedores) (ADR-04, 08)")]
         RT["Supabase Realtime (WebSocket <= 100 ms)<br/>Chat e Leilões (ADR-09, 15, 18)"]
         STG["Supabase Storage<br/>offers-media, disputes-laudos, chat-attachments (ADR-11)"]
     end
@@ -85,3 +100,14 @@ flowchart TB
     API -->|Upload WebP s/ EXIF| STG
     CORE -->|pg_cron + outbox + pg_net| API
 ```
+
+---
+
+## 🤝 Como Contribuir & Linha do Tempo
+
+Veja [CONTRIBUTING.md](CONTRIBUTING.md) para regras de branches (`tipo/EDTS-123-descricao`), Conventional Commits e revisões.
+
+| Período | Produto | Numeração dos documentos |
+|---|---|---|
+| **1º semestre** (mar–jun/2026, Sprints 1–6) | Plataforma de doação e coleta de sucata eletrônica (Doador, Coletor, Instituição) | `UC-01` a `UC-18`, `RF-01` a `RF-21` |
+| **2º semestre** (ago–nov/2026, Sprints 7–16) | Marketplace de hardware com Scanner IA, leilões, moedas e escrow | `STY001` a `STY058`, `RF-01` a `RF-22` (v2.0) |
