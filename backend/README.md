@@ -14,14 +14,14 @@ API REST que concentra as regras de negócio do Steely. Toda escrita e toda leit
 
 | ADR | Assunto |
 |---|---|
-| [ADR-09](../docs/04-arquitetura/adr/adr-09-onde-fica-a-autorizacao.md) | Autorização em duas camadas (FastAPI + PostgreSQL) |
-| [ADR-13](../docs/04-arquitetura/adr/adr-13-contrato-e-versionamento-da-api.md) | Contrato OpenAPI, versionamento `/api/v1` e formato de erro |
-| [ADR-14](../docs/04-arquitetura/adr/adr-14-idempotencia.md) | Idempotência com `Idempotency-Key` |
-| [ADR-15](../docs/04-arquitetura/adr/adr-15-concorrencia-dos-lances.md) | Concorrência dos lances nos leilões |
-| [ADR-16](../docs/04-arquitetura/adr/adr-16-tarefas-agendadas.md) | Tarefas agendadas (`pg_cron`) |
-| [ADR-17](../docs/04-arquitetura/adr/adr-17-estrategia-de-testes.md) | Estratégia de testes |
-| [ADR-02](../docs/04-arquitetura/adr/adr-02-censura-de-dados-pessoais.md) | Censura de dados pessoais no chat |
-| [ADR-03](../docs/04-arquitetura/adr/adr-03-escrow-simulado.md) | Escrow e retenção de 7 dias |
+| [ADR-09](../02-adrs/md/ADR-09_Onde_Fica_a_Autorizacao.md) | Autorização em duas camadas (FastAPI + PostgreSQL) |
+| [ADR-13](../02-adrs/md/ADR-13_Contrato_e_Versionamento_da_API.md) | Contrato OpenAPI, versionamento `/api/v1` e formato de erro |
+| [ADR-14](../02-adrs/md/ADR-14_Idempotencia.md) | Idempotência com `Idempotency-Key` |
+| [ADR-15](../02-adrs/md/ADR-15_Concorrencia_dos_Lances.md) | Concorrência dos lances nos leilões |
+| [ADR-16](../02-adrs/md/ADR-16_Tarefas_Agendadas.md) | Tarefas agendadas (`pg_cron`) |
+| [ADR-17](../02-adrs/md/ADR-17_Estrategia_de_Testes.md) | Estratégia de testes |
+| [ADR-02](../02-adrs/md/ADR-02_Censura_de_Dados_Pessoais_e_Contatos.md) | Censura de dados pessoais no chat |
+| [ADR-03](../02-adrs/md/ADR-03_Escrow_Simulado.md) | Escrow e retenção de 7 dias |
 
 ## Código
 

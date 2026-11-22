@@ -9,7 +9,7 @@
 | [PASSO-A-PASSO-SIMPLES.md](PASSO-A-PASSO-SIMPLES.md) | **Comece por aqui:** fazer uma tela clique por clique, com GitHub Desktop e IA no navegador |
 | [GUIA-DE-PROTOTIPOS.md](GUIA-DE-PROTOTIPOS.md) | Guia completo para gerar uma tela nova com Claude, Gemini, ChatGPT ou outra IA, verificar e colocar no Figma |
 
-Os componentes de interface seguem o design system compartilhado entre web e mobile ([ADR-19](../04-arquitetura/adr/adr-19-design-system-compartilhado.pdf)) e as regras de acessibilidade do [ADR-20](../04-arquitetura/adr/adr-20-acessibilidade-e-responsividade.pdf).
+Os componentes de interface seguem o design system compartilhado entre web e mobile ([ADR-19](../../02-adrs/md/ADR-19_Validacao_e_Schemas_Compartilhados.md)) e as regras de acessibilidade do [ADR-20](../../02-adrs/md/ADR-20_Estrategia_de_Renderizacao_Web.md).
 
 ## Design System em resumo
 

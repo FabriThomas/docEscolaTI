@@ -128,7 +128,7 @@ Arquivo: [STEELY no Figma](https://www.figma.com/design/MZxnX0uT8BGIxpxkMFwUCj/S
 2. Anote três coisas, porque vão para o prompt:
    - **Número e nome**: ex. `007 · Meus Anúncios`
    - **O que a tela precisa ter**: a descrição da tarefa no Jira
-   - **Casos de uso relacionados**: abra [`especificacao-dos-casos-de-uso.xlsx`](../02-requisitos/casos-de-uso/especificacao-dos-casos-de-uso.xlsx), ache a aba `STYnnn` do assunto (ex.: STY019 Alterar Status Anúncio para a tela 009) e copie o **fluxo principal** e os **fluxos alternativos**. Confira também as [regras de negócio](../02-requisitos/).
+   - **Casos de uso relacionados**: abra [`Especificacao_Casos_de_Uso_Steely.xlsx`](../../01-planejamento/originais/Especificacao_Casos_de_Uso_Steely.xlsx), ache a aba `STYnnn` do assunto (ex.: STY019 Alterar Status Anúncio para a tela 009) e copie o **fluxo principal** e os **fluxos alternativos**. Confira também as [regras de negócio](../../01-planejamento/Regras_de_Negocio.md).
 3. Pense no **fluxo**: de qual tela o usuário vem e para qual vai ao tocar em cada botão. Isso evita telas soltas.
 
 > Dica: se a descrição no Jira for genérica, o caso de uso é a fonte mais confiável do que precisa aparecer na tela.

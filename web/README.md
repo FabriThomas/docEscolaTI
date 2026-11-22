@@ -14,11 +14,11 @@ Aplicação web do Steely: a experiência do usuário final no navegador e o pai
 
 | ADR | Assunto |
 |---|---|
-| [ADR-18](../docs/04-arquitetura/adr/adr-18-estado-e-cache-de-dados-no-web.pdf) | Estado e cache de dados |
-| [ADR-19](../docs/04-arquitetura/adr/adr-19-design-system-compartilhado.pdf) | Design system compartilhado com o mobile |
-| [ADR-20](../docs/04-arquitetura/adr/adr-20-acessibilidade-e-responsividade.pdf) | Acessibilidade (WCAG 2.1 AA) e responsividade |
-| [ADR-21](../docs/04-arquitetura/adr/adr-21-provedor-de-captcha.pdf) | Provedor de captcha |
-| [ADR-22](../docs/04-arquitetura/adr/adr-22-dashboard-e-esg.pdf) | Dashboard e métricas ESG |
+| [ADR-18](../02-adrs/md/ADR-18_Gerenciamento_de_Estado_e_Dados_no_Cliente.md) | Estado e cache de dados |
+| [ADR-19](../02-adrs/md/ADR-19_Validacao_e_Schemas_Compartilhados.md) | Design system compartilhado com o mobile |
+| [ADR-20](../02-adrs/md/ADR-20_Estrategia_de_Renderizacao_Web.md) | Acessibilidade (WCAG 2.1 AA) e responsividade |
+| [ADR-21](../02-adrs/md/ADR-21_Integracao_de_Captcha.md) | Provedor de captcha |
+| [ADR-22](../02-adrs/md/ADR-22_Agregacao_de_Metricas_ESG.md) | Dashboard e métricas ESG |
 
 Telas de referência: [docs/05-design/prototipos](../docs/05-design/prototipos/).
 

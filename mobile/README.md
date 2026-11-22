@@ -14,12 +14,12 @@ Aplicativo Android do Steely: anunciar com o Scanner IA, negociar pelo chat, ir 
 
 | ADR | Assunto |
 |---|---|
-| [ADR-23](../docs/04-arquitetura/adr/adr-23-offline-first.md) | Offline-first |
-| [ADR-24](../docs/04-arquitetura/adr/adr-24-armazenamento-seguro-no-dispositivo.md) | Armazenamento seguro de chaves e tokens |
-| [ADR-25](../docs/04-arquitetura/adr/adr-25-notificacoes-push.md) | Notificações push |
-| [ADR-26](../docs/04-arquitetura/adr/adr-26-provedor-de-mapas-e-rotas.md) | Provedor de mapas e rotas |
-| [ADR-27](../docs/04-arquitetura/adr/adr-27-captura-e-compressao-de-imagem.md) | Captura e compressão de imagem (WebP) |
-| [ADR-19](../docs/04-arquitetura/adr/adr-19-design-system-compartilhado.pdf) | Design system compartilhado com a web |
+| [ADR-23](../02-adrs/md/ADR-23_Offline_First.md) | Offline-first |
+| [ADR-24](../02-adrs/md/ADR-24_Armazenamento_Seguro_no_Dispositivo.md) | Armazenamento seguro de chaves e tokens |
+| [ADR-25](../02-adrs/md/ADR-25_Notificacoes_Push.md) | Notificações push |
+| [ADR-26](../02-adrs/md/ADR-26_Provedor_de_Mapas_e_Rotas.md) | Provedor de mapas e rotas |
+| [ADR-27](../02-adrs/md/ADR-27_Captura_e_Compressao_de_Imagem.md) | Captura e compressão de imagem (WebP) |
+| [ADR-19](../02-adrs/md/ADR-19_Validacao_e_Schemas_Compartilhados.md) | Design system compartilhado com a web |
 
 Telas de referência: [docs/05-design/prototipos](../docs/05-design/prototipos/).
 

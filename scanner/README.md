@@ -14,7 +14,7 @@ Serviço de visão computacional que identifica o hardware pelas fotos do anúnc
 2. **Classificação hierárquica** — do geral ao específico (níveis L0 a L4: categoria, linha, série...).
 3. **Identificação do modelo exato** — busca vetorial com FAISS (nível L5), para distinguir placas visualmente "gêmeas".
 4. **Leitura da etiqueta** — OCR (PaddleOCR).
-5. **Decisão por confiança** ([ADR-12](../docs/04-arquitetura/adr/adr-12-limiar-de-confianca-do-scanner.md)):
+5. **Decisão por confiança** ([ADR-12](../02-adrs/md/ADR-12_Limiar_de_Confianca_do_Scanner.md)):
 
 | Confiança | O que acontece |
 |---|---|
@@ -28,10 +28,10 @@ Os modelos rodam em **ONNX** num serviço separado da API, e a resposta precisa 
 
 | ADR | Assunto |
 |---|---|
-| [ADR-01](../docs/04-arquitetura/adr/adr-01-motor-do-scanner-ia.md) | Arquitetura e motor de visão computacional |
-| [ADR-12](../docs/04-arquitetura/adr/adr-12-limiar-de-confianca-do-scanner.md) | Limiar de confiança |
-| [ADR-11](../docs/04-arquitetura/adr/adr-11-armazenamento-de-imagens.md) | Armazenamento de imagens (sem EXIF/GPS) |
-| [ADR-27](../docs/04-arquitetura/adr/adr-27-captura-e-compressao-de-imagem.md) | Captura e compressão no celular |
+| [ADR-01](../02-adrs/md/ADR-01_Motor_do_Scanner_IA.md) | Arquitetura e motor de visão computacional |
+| [ADR-12](../02-adrs/md/ADR-12_Limiar_de_Confianca_do_Scanner.md) | Limiar de confiança |
+| [ADR-11](../02-adrs/md/ADR-11_Armazenamento_de_Imagens.md) | Armazenamento de imagens (sem EXIF/GPS) |
+| [ADR-27](../02-adrs/md/ADR-27_Captura_e_Compressao_de_Imagem.md) | Captura e compressão no celular |
 
 ## Código
 

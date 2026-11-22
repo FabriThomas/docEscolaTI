@@ -16,16 +16,16 @@ No celular, o cache offline usa SQLite (WatermelonDB) — ver [mobile/](../mobil
 
 | ADR | Assunto |
 |---|---|
-| [ADR-08](../docs/04-arquitetura/adr/adr-08-banco-principal.md) | Banco principal |
-| [ADR-09](../docs/04-arquitetura/adr/adr-09-onde-fica-a-autorizacao.md) | Autorização no banco (RLS e funções) |
-| [ADR-10](../docs/04-arquitetura/adr/adr-10-ledger-de-moedas.md) | Ledger de moedas |
-| [ADR-11](../docs/04-arquitetura/adr/adr-11-armazenamento-de-imagens.md) | Armazenamento de imagens (Supabase Storage) |
-| [ADR-04](../docs/04-arquitetura/adr/adr-04-k-anonimato-no-daas.md) | k-anonimato no DaaS |
-| [ADR-05](../docs/04-arquitetura/adr/adr-05-retencao-e-imutabilidade-dos-logs.pdf) | Retenção e imutabilidade dos logs |
+| [ADR-08](../02-adrs/md/ADR-08_Banco_Principal.md) | Banco principal |
+| [ADR-09](../02-adrs/md/ADR-09_Onde_Fica_a_Autorizacao.md) | Autorização no banco (RLS e funções) |
+| [ADR-10](../02-adrs/md/ADR-10_Ledger_de_Moedas.md) | Ledger de moedas |
+| [ADR-11](../02-adrs/md/ADR-11_Armazenamento_de_Imagens.md) | Armazenamento de imagens (Supabase Storage) |
+| [ADR-04](../02-adrs/md/ADR-04_Anonimizacao_e_Agregacao_do_DaaS.md) | k-anonimato no DaaS |
+| [ADR-05](../02-adrs/md/ADR-05_Trilha_de_Auditoria_Imutavel.md) | Retenção e imutabilidade dos logs |
 
 ## Modelo de dados
 
-O DER do modelo atual estava em elaboração na Sprint 13 — ver [docs/04-arquitetura](../docs/04-arquitetura/). A versão de junho/2026, do produto anterior, está em [docs/historico/diagramas](../docs/historico/diagramas/).
+O DER do modelo atual (66 tabelas) está em [DER_Modelo_de_Dados.md](../01-planejamento/DER_Modelo_de_Dados.md). A versão de junho/2026, do produto anterior, está em [docs/historico/diagramas](../docs/historico/diagramas/).
 
 ## Código
 
