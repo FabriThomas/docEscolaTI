@@ -1,0 +1,30 @@
+name: Backend
+
+on:
+  pull_request:
+    paths: ["backend/**", ".github/workflows/backend.yml"]
+  push:
+    branches: [main]
+    paths: ["backend/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  api:
+    name: API (testes e contrato OpenAPI)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: ruff check .
+      # test_esg_daas_ong_lgpd depende de módulos ainda fora deste repositório (ver relatório, seção 6)
+      - run: pytest --ignore=tests/test_esg_daas_ong_lgpd.py
+      - name: Snapshot do OpenAPI em dia (ADR-13)
+        run: python scripts/export_openapi.py --check
