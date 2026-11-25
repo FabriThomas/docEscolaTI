@@ -48,4 +48,10 @@ npm test
 npx tsc --noEmit
 ```
 
-Sem backend, o app usa o mock (`EXPO_PUBLIC_USAR_MOCK=sim`). As decisões e o que ainda falta combinar estão em [DECISOES-EDTS-381.md](DECISOES-EDTS-381.md).
+Sem backend, o app usa o mock (`EXPO_PUBLIC_USAR_MOCK=sim`). As decisões e o que ainda falta combinar estão em [DECISOES-EDTS-381.md](DECISOES-EDTS-381.md) e [DECISOES-EDTS-383.md](DECISOES-EDTS-383.md).
+
+Desde a EDTS-383 o app usa WatermelonDB, que não roda no Expo Go. Para abrir no aparelho é preciso um dev build:
+
+```bash
+npx expo run:android
+```

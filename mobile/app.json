@@ -7,14 +7,27 @@
     "orientation": "portrait",
     "userInterfaceStyle": "dark",
     "android": {
-      "package": "br.edu.steely"
+      "package": "br.edu.steely",
+      "allowBackup": false
     },
     "plugins": [
       "expo-router",
       "expo-secure-store",
       "expo-font",
-      ["expo-camera", { "cameraPermission": "O Steely usa a câmera para fotografar a peça do anúncio" }],
-      ["expo-image-picker", { "photosPermission": "O Steely precisa das suas fotos para montar o anúncio" }]
+      [
+        "expo-camera",
+        {
+          "cameraPermission": "O Steely usa a câmera para fotografar a peça do anúncio"
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "O Steely precisa das suas fotos para montar o anúncio"
+        }
+      ],
+      "@morrowdigital/watermelondb-expo-plugin",
+      "expo-dev-client"
     ]
   }
 }
