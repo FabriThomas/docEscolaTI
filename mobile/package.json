@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start": "expo start",
-    "android": "expo start --android",
+    "android": "expo run:android",
     "test": "jest",
     "tsc": "tsc --noEmit"
   },
@@ -22,13 +22,10 @@
     "@expo-google-fonts/dm-sans": "^0.4.2",
     "@expo-google-fonts/space-grotesk": "^0.4.1",
     "@expo/vector-icons": "^15.1.1",
-    "@morrowdigital/watermelondb-expo-plugin": "^2.3.3",
-    "@nozbe/watermelondb": "^0.28.0",
     "@react-native-community/netinfo": "12.0.1",
     "expo": "^58.0.26",
     "expo-camera": "~58.0.14",
     "expo-constants": "~58.0.16",
-    "expo-dev-client": "~58.0.21",
     "expo-file-system": "~58.0.14",
     "expo-font": "~58.0.12",
     "expo-image-manipulator": "~58.0.16",
@@ -36,6 +33,7 @@
     "expo-linking": "~58.0.17",
     "expo-router": "~58.0.32",
     "expo-secure-store": "~58.0.3",
+    "expo-sqlite": "~58.0.18",
     "expo-status-bar": "~58.0.5",
     "react": "19.3.0",
     "react-dom": "19.3.0",
@@ -49,6 +47,7 @@
     "@types/react": "~19.3.0",
     "jest": "~30.5.2",
     "jest-expo": "~58.0.15",
+    "sql.js": "^1.17.0",
     "typescript": "~6.0.3"
   }
 }

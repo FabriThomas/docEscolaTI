@@ -286,11 +286,7 @@ export async function respostaMock(caminho: string, metodo: string, body: any, c
   }
 
   if(metodo == 'GET' && caminho.startsWith('/sync/pull')){
-    return responder(200, {changes: {routes: {created: [], updated: [], deleted: []}, appointments: {created: [], updated: [], deleted: []}, meeting_points: {created: [], updated: [], deleted: []}, pending_mutations: {created: [], updated: [], deleted: []}}, timestamp: Date.now()})
-  }
-
-  if(metodo == 'POST' && caminho.startsWith('/sync/push')){
-    return responder(200, {})
+    return responder(200, {changes: {routes: {created: [], updated: [], deleted: []}, appointments: {created: [], updated: [], deleted: []}, meeting_points: {created: [], updated: [], deleted: []}}, timestamp: Date.now()})
   }
 
   if(metodo == 'POST' && caminho.startsWith('/orders/') && caminho.endsWith('/delivery-confirmation')){

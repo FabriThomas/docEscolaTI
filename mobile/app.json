@@ -8,7 +8,11 @@
     "userInterfaceStyle": "dark",
     "android": {
       "package": "br.edu.steely",
-      "allowBackup": false
+      "allowBackup": false,
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "plugins": [
       "expo-router",
@@ -25,9 +29,10 @@
         {
           "photosPermission": "O Steely precisa das suas fotos para montar o anúncio"
         }
-      ],
-      "@morrowdigital/watermelondb-expo-plugin",
-      "expo-dev-client"
-    ]
+      ]
+    ],
+    "ios": {
+      "bundleIdentifier": "br.edu.steely"
+    }
   }
 }

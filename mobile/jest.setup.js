@@ -15,16 +15,31 @@ jest.mock('expo-secure-store', ()=>{
   }
 })
 
-jest.mock('@nozbe/watermelondb/adapters/sqlite', ()=>{
-  const LokiJSAdapter = require('@nozbe/watermelondb/adapters/lokijs').default
-  return function(opcoes){
-    return new LokiJSAdapter({schema: opcoes.schema, useWebWorker: false, useIncrementalIndexedDB: false, extraLokiOptions: {autosave: false}})
+jest.mock('expo-sqlite', ()=>{
+  const iniciar = require('sql.js')
+  return {
+    openDatabaseAsync: async ()=>{
+      const SQL = await iniciar()
+      const db = new SQL.Database()
+      function linhas(sql, params){
+        const comando = db.prepare(sql)
+        comando.bind(params || [])
+        const lista = []
+        while(comando.step()) lista.push(comando.getAsObject())
+        comando.free()
+        return lista
+      }
+      return {
+        execAsync: async (sql)=>{ db.exec(sql) },
+        runAsync: async (sql, params)=>{ db.run(sql, params || []) },
+        getAllAsync: async (sql, params)=> linhas(sql, params),
+        getFirstAsync: async (sql, params)=> linhas(sql, params)[0] || null,
+      }
+    }
   }
 })
 
 jest.mock('@react-native-community/netinfo', ()=> require('@react-native-community/netinfo/jest/netinfo-mock.js'))
-
-require('@nozbe/watermelondb/utils/common/logger').default.silence()
 
 ligarMock()
 global.alert = jest.fn()

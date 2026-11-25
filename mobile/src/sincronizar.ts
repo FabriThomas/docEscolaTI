@@ -1,22 +1,20 @@
-import { synchronize } from '@nozbe/watermelondb/sync'
-import { Q } from '@nozbe/watermelondb'
 import NetInfo from '@react-native-community/netinfo'
-import { banco } from './banco'
+import { listar, salvar, apagar, lerInfo, salvarInfo, tirarVencidos, VALIDADE } from './banco'
 import { chamar, lerResposta } from './api'
 
 let sincronizando = false
 
 export async function enviarFila(){
-  const fila: any[] = await banco.get('pending_mutations').query(Q.where('is_deleted', false)).fetch()
+  const fila: any[] = await listar('pending_mutations')
   for(const m of fila){
     try{
-      const res = await chamar(m.caminho, {method: 'POST', headers: {'Idempotency-Key': m.idempotencyKey}, body: m.corpo})
+      const res = await chamar(m.caminho, {method: 'POST', headers: {'Idempotency-Key': m.idempotency_key}, body: m.corpo})
       if(res.status == 401) return
       const dados = await lerResposta(res)
       if(res.ok || dados.code == 'IDEMPOTENCY_KEY_REUSED'){
-        await banco.write(async ()=>{ await m.destroyPermanently() })
+        await apagar('pending_mutations', m.id)
       }else if(dados.code != 'IDEMPOTENCY_IN_PROGRESS'){
-        await banco.write(async ()=>{ await m.update((x: any)=>{ x.tentativas = x.tentativas + 1 }) })
+        await salvar('pending_mutations', {...m, tentativas: m.tentativas + 1, updated_at: Date.now()})
       }
     }catch(e){
       return
@@ -24,27 +22,34 @@ export async function enviarFila(){
   }
 }
 
+export async function baixarMudancas(){
+  const ultima = await lerInfo('ultimo_pull')
+  const res = await chamar('/sync/pull?lastPulledAt=' + (ultima || 0))
+  const dados = await lerResposta(res)
+  if(!res.ok) throw new Error(dados.detail || 'erro ao baixar os dados')
+
+  const mudancas = dados.changes || {}
+  for(const tabela of ['routes', 'appointments', 'meeting_points']){
+    const m = mudancas[tabela]
+    if(!m) continue
+    const novos = [...(m.created || []), ...(m.updated || [])]
+    for(const r of novos){
+      await salvar(tabela, {...r, expira_em: r.expira_em || Date.now() + VALIDADE[tabela]})
+    }
+    for(const id of m.deleted || []){
+      await apagar(tabela, id)
+    }
+  }
+  await salvarInfo('ultimo_pull', String(dados.timestamp || Date.now()))
+}
+
 export async function sincronizar(){
   if(sincronizando) return
   sincronizando = true
   try{
     await enviarFila()
-    await synchronize({
-      database: banco,
-      pullChanges: async ({lastPulledAt})=>{
-        const res = await chamar('/sync/pull?lastPulledAt=' + (lastPulledAt || 0))
-        const dados = await lerResposta(res)
-        if(!res.ok) throw new Error(dados.detail || 'erro ao baixar os dados')
-        return {changes: dados.changes, timestamp: dados.timestamp}
-      },
-      pushChanges: async ({changes, lastPulledAt})=>{
-        const res = await chamar('/sync/push?lastPulledAt=' + lastPulledAt, {method: 'POST', body: JSON.stringify(changes)})
-        if(!res.ok){
-          const dados = await lerResposta(res)
-          throw new Error(dados.detail || 'erro ao enviar os dados')
-        }
-      },
-    })
+    await baixarMudancas()
+    await tirarVencidos()
   }finally{
     sincronizando = false
   }

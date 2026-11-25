@@ -20,15 +20,22 @@ O que o app faz quando as fontes não batem ou não dizem nada. Cada linha pode 
 |---|---|---|
 | Tokens | ADR-24. | `expo-secure-store` com as chaves `STEELY_JWT_ACCESS`, `STEELY_JWT_REFRESH` e `STEELY_ED25519_PUB`, tudo em `src/secureStorage.ts`. A chave pública precisa ter 44 caracteres. |
 | Biometria | ADR-24: opcional. | Não foi feita nesta tarefa. |
-| Banco local | ADR-23. | WatermelonDB com `routes`, `appointments`, `meeting_points` e `pending_mutations`, todas com `updated_at` e `is_deleted`. Validade: rotas 24 h, encontros 1 h, pontos 7 dias. |
-| Sincronização | ADR-23: ao voltar a internet, em até 10 s (RNF-07). | NetInfo dispara a fila e depois o `synchronize()`. A fila manda `Idempotency-Key` (ADR-14) e apaga o item quando dá certo ou quando vem `IDEMPOTENCY_KEY_REUSED`. |
-| Rotas de sync | Nenhuma fonte define. | `GET /sync/pull?lastPulledAt=` e `POST /sync/push?lastPulledAt=`. **Proposta, precisa combinar com o backend.** |
+| Banco local | ADR-23: WatermelonDB. | `expo-sqlite` (veja "Por que não WatermelonDB" abaixo), com `routes`, `appointments`, `meeting_points` e `pending_mutations`, todas com `updated_at` e `is_deleted`. Validade: rotas 24 h, encontros 1 h, pontos 7 dias. Os vencidos são apagados a cada sincronização. |
+| Sincronização | ADR-23: ao voltar a internet, em até 10 s (RNF-07). | NetInfo dispara a fila e depois baixa as mudanças. A fila manda `Idempotency-Key` (ADR-14) e apaga o item quando dá certo ou quando vem `IDEMPOTENCY_KEY_REUSED`. |
+| Rotas de sync | Nenhuma fonte define. | `GET /sync/pull?lastPulledAt=`, que devolve `{changes: {tabela: {created, updated, deleted}}, timestamp}`. Rotas, encontros e pontos só descem do servidor; o que o app manda sobe pela fila (`pending_mutations`), então não existe `/sync/push`. **Proposta, precisa combinar com o backend.** |
 | Limpeza | ADR-23: na exclusão ou revogação. | `limparAparelho()` zera o banco e apaga as 3 chaves. Na exclusão, tenta mandar a fila antes. |
 | Refresh com falha | ADR-24. | Só apaga o aparelho quando o servidor recusa o refresh (400, 401 ou 403). Sem internet ou com erro 5xx, mantém tudo e tenta de novo depois. Duas 401 ao mesmo tempo fazem um refresh só. |
 | Sair | STY009. | Apaga o aparelho primeiro e avisa o servidor depois, mandando também o refresh token. Assim não trava sem internet. |
 | Mock | — | Só liga em modo de desenvolvimento (`__DEV__`), nunca numa build de produção. |
 | Backup do Android | ADR-23. | `allowBackup: false`, para o banco local não ir pro backup do Google. |
-| Build | WatermelonDB 0.28 é de julho de 2025 e não diz que suporta RN 0.88. | Precisa de dev build (`npx expo run:android` ou EAS), não roda no Expo Go. **O build nativo ainda não foi testado.** |
+
+## Por que não WatermelonDB
+
+A ADR-23 escolhe o WatermelonDB. Na hora de compilar o app, o código nativo dele não compilou com o React Native 0.88 do projeto: ele usa o `RCTCxxBridge`, que o React Native removeu. Nem a versão 0.28.0 nem a prévia 0.28.1-0 (julho de 2025, a última publicada) corrigem isso.
+
+Por isso o app usa o `expo-sqlite`, que sai junto com cada versão do Expo SDK. O que a ADR-23 pede continua igual: as 4 tabelas com `updated_at` e `is_deleted`, a validade de cada uma, a fila com `Idempotency-Key`, a sincronização quando a internet volta e a limpeza ao sair ou excluir a conta. De quebra, o app volta a rodar no Expo Go, sem dev build.
+
+**A ADR-23 precisa ser atualizada pelo grupo.**
 
 ## Login (protótipo 01, STY002, ADR-21)
 
