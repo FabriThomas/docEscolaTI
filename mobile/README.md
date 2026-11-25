@@ -25,4 +25,27 @@ Telas de referência: [docs/05-design/prototipos](../docs/05-design/prototipos/)
 
 ## Código
 
-*Ainda não adicionado a este repositório.*
+| Pasta | O que tem |
+|---|---|
+| `app/anunciar` | Criar anúncio em 4 etapas (protótipos 002 a 006): fotos, câmera, detalhes, preço e revisão. |
+| `app/anuncios` | Meus anúncios, pausar, reabrir, excluir e editar (007 a 010). |
+| `src` | Cores, chamada à API, fotos (validação e compressão WebP), rascunho do anúncio e mock da API. |
+| `__tests__` | Testes com Jest e Testing Library. |
+
+### Como rodar
+
+```bash
+cd mobile
+npm install
+cp .env.example .env
+npx expo start
+```
+
+Testes:
+
+```bash
+npm test
+npx tsc --noEmit
+```
+
+Sem backend, o app usa o mock (`EXPO_PUBLIC_USAR_MOCK=sim`). As decisões e o que ainda falta combinar estão em [DECISOES-EDTS-381.md](DECISOES-EDTS-381.md).
