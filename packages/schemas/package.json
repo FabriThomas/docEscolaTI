@@ -1,0 +1,13 @@
+{
+  "name": "@steely/schemas",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Schemas Zod compartilhados entre web e app (validação de formulários e de respostas da API).",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "peerDependencies": {
+    "zod": "^4.0.0"
+  }
+}
