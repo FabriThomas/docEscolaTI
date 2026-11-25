@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Steely",
+    "slug": "steely",
+    "scheme": "steely",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "br.edu.steely"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      "expo-font",
+      ["expo-camera", { "cameraPermission": "O Steely usa a câmera para fotografar a peça do anúncio" }],
+      ["expo-image-picker", { "photosPermission": "O Steely precisa das suas fotos para montar o anúncio" }]
+    ]
+  }
+}
