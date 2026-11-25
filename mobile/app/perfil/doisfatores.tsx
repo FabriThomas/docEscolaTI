@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
   texto:      {fontFamily:fontes.texto, fontSize:14, lineHeight:20, color:cores.branco},
   rotulo:     {fontFamily:fontes.texto, fontSize:13, color:cores.cinza, marginTop:6},
   caption:    {fontFamily:fontes.textoMedio, fontSize:11, lineHeight:15, color:cores.cinza},
-  input:      {minHeight:49, paddingHorizontal:16, borderRadius:12, borderWidth:1, borderColor:cores.borda, backgroundColor:cores.campo, color:cores.branco, fontFamily:fontes.texto, fontSize:15},
+  input:      {minHeight:49, paddingHorizontal:16, borderRadius:12, borderWidth:1, borderColor:cores.borda, backgroundColor:cores.campo, color:cores.branco, fontFamily:fontes.texto, fontSize:15, letterSpacing:0},
   inputcodigo:{fontSize:22, letterSpacing:8, textAlign:'center'},
   chave:      {fontFamily:fontes.textoForte, fontSize:16, letterSpacing:2, color:cores.verdeEsg, padding:12, borderRadius:12, backgroundColor:cores.campo},
   codigos:    {flexDirection:'row', flexWrap:'wrap', gap:8},

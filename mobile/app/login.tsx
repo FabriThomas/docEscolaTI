@@ -223,7 +223,7 @@ const styles = StyleSheet.create({
   titulo:     {fontFamily:fontes.titulo, fontSize:24, color:cores.branco},
   subtitulo:  {fontFamily:fontes.texto, fontSize:13, color:cores.cinza, marginTop:6},
   rotulo:     {fontFamily:fontes.texto, fontSize:13, color:cores.branco, marginBottom:8},
-  campo:      {backgroundColor:cores.borda, borderRadius:12, paddingHorizontal:16, minHeight:49, color:cores.branco, fontFamily:fontes.texto, fontSize:14},
+  campo:      {backgroundColor:cores.borda, borderRadius:12, paddingHorizontal:16, minHeight:49, color:cores.branco, fontFamily:fontes.texto, fontSize:14, letterSpacing:0},
   campocodigo:{fontSize:24, letterSpacing:8, textAlign:'center'},
   linhasenha: {flexDirection:'row', alignItems:'center', backgroundColor:cores.borda, borderRadius:12},
   link:       {fontFamily:fontes.textoMedio, fontSize:13, color:cores.verde},

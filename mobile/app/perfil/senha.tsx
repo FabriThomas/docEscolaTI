@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
   titulotopo: {fontFamily:fontes.titulo, fontSize:18, color:cores.branco},
   rotulo:     {fontFamily:fontes.texto, fontSize:13, color:cores.cinza},
   campo:      {flexDirection:'row', alignItems:'center', minHeight:49, paddingLeft:16, borderRadius:12, borderWidth:1, borderColor:cores.borda, backgroundColor:cores.campo},
-  input:      {flex:1, color:cores.branco, fontFamily:fontes.texto, fontSize:15},
+  input:      {flex:1, color:cores.branco, fontFamily:fontes.texto, fontSize:15, letterSpacing:0},
   caption:    {fontFamily:fontes.textoMedio, fontSize:11, lineHeight:15, color:cores.cinza},
   aviso:      {flexDirection:'row', gap:8, padding:12, borderRadius:12, backgroundColor:cores.cinzaFraco},
   erro:       {fontFamily:fontes.texto, fontSize:13, color:cores.vermelho},

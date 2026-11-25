@@ -45,7 +45,7 @@ export default function ExcluirConta(){
       }
       if(d.code == 'DELETION_BLOCKED'){
         const pendente = (d.pending || []).find((p: any)=> p.kind == 'COINS')
-        if(pendente) setMoedas({quantidade: pendente.amount, texto: d.detail})
+        if(pendente) setMoedas({quantidade: pendente.amount})
         else setErro(d.detail || 'Você tem pendências abertas. Resolva antes de excluir.')
       }else{
         setErro(d.detail || 'Não deu pra pedir a exclusão.')
@@ -84,7 +84,7 @@ export default function ExcluirConta(){
         {moedas ? (
           <View style={styles.caixamoedas}>
             <Text style={styles.titulo}>Você ainda tem {moedas.quantidade} moedas</Text>
-            <Text style={styles.texto}>{moedas.texto || 'Elas serão perdidas.'}</Text>
+            <Text style={styles.texto}>Se você excluir a conta, elas serão perdidas.</Text>
             <View style={[styles.linha, {gap:10}]}>
               <TouchableOpacity style={styles.botaosecundario} onPress={()=> setMoedas(null)} disabled={enviando} accessibilityRole="button">
                 <Text style={styles.textobranco}>Voltar</Text>
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   texto:          {fontFamily:fontes.texto, fontSize:14, lineHeight:20, color:cores.branco},
   caption:        {fontFamily:fontes.textoMedio, fontSize:11, lineHeight:15, color:cores.cinza},
   rotulo:         {fontFamily:fontes.texto, fontSize:13, color:cores.cinza, marginTop:6},
-  input:          {minHeight:49, paddingHorizontal:16, borderRadius:12, borderWidth:1, borderColor:cores.borda, backgroundColor:cores.campo, color:cores.branco, fontFamily:fontes.texto, fontSize:15},
+  input:          {minHeight:49, paddingHorizontal:16, borderRadius:12, borderWidth:1, borderColor:cores.borda, backgroundColor:cores.campo, color:cores.branco, fontFamily:fontes.texto, fontSize:15, letterSpacing:0},
   erro:           {fontFamily:fontes.texto, fontSize:13, color:cores.vermelho},
   caixamoedas:    {gap:10, padding:14, borderRadius:12, borderWidth:1, borderColor:cores.borda, backgroundColor:cores.card},
   linha:          {flexDirection:'row', alignItems:'center'},

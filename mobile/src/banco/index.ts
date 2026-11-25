@@ -91,6 +91,7 @@ export async function salvar(tabela: string, dados: any){
 
 export async function listar(tabela: string){
   const db = await abrirBanco()
+  if(tabela == 'pending_mutations') return await db.getAllAsync('SELECT * FROM pending_mutations WHERE is_deleted = 0 ORDER BY lido_em, rowid')
   return await db.getAllAsync('SELECT * FROM ' + tabela + ' WHERE is_deleted = 0')
 }
 
