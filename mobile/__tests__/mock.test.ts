@@ -22,3 +22,11 @@ it('editar com versao velha da conflito', async ()=>{
   const dados = await res.json()
   expect(dados.code).toBe('OFFER_VERSION_CONFLICT')
 })
+
+it('anuncio novo nao repete o id de um anuncio que ja existe', async ()=>{
+  await fetch(URL_API + '/offers', {method: 'POST', body: JSON.stringify({title: 'Placa de video', description: 'usada', priceCents: 100000, operationalState: 'FUNCIONA'})})
+  const res = await fetch(URL_API + '/offers/me')
+  const dados = await res.json()
+  const ids = dados.data.map((a: any)=> a.id)
+  expect(new Set(ids).size).toBe(ids.length)
+})

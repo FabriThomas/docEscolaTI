@@ -7,7 +7,7 @@ Aplicativo Android do Steely: anunciar com o Scanner IA, negociar pelo chat, ir 
 | | |
 |---|---|
 | **Tecnologia** | Expo (React Native) |
-| **Offline** | WatermelonDB, com sincronização em segundo plano |
+| **Offline** | expo-sqlite, com sincronização quando a internet volta (a ADR-23 previa WatermelonDB, veja [DECISOES-EDTS-383.md](DECISOES-EDTS-383.md)) |
 | **Mapas** | Google Routes API |
 
 ## Decisões que se aplicam aqui
@@ -48,4 +48,6 @@ npm test
 npx tsc --noEmit
 ```
 
-Sem backend, o app usa o mock (`EXPO_PUBLIC_USAR_MOCK=sim`). As decisões e o que ainda falta combinar estão em [DECISOES-EDTS-381.md](DECISOES-EDTS-381.md).
+Sem backend, o app usa o mock (`EXPO_PUBLIC_USAR_MOCK=sim`). As decisões e o que ainda falta combinar estão em [DECISOES-EDTS-381.md](DECISOES-EDTS-381.md) e [DECISOES-EDTS-383.md](DECISOES-EDTS-383.md).
+
+O app roda no Expo Go: depois do `npx expo start`, é só ler o QR code com o celular.

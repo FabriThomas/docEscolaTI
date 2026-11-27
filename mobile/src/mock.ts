@@ -1,4 +1,4 @@
-import { URL_API } from './api'
+import { URL_API } from './config'
 
 let cenarioScanner = 'AUTO_L5'
 let anuncios: any[] = []
@@ -20,9 +20,69 @@ function anunciosIniciais(){
   ]
 }
 
+let falhasLogin = 0
+let conta: any = {}
+let seguranca: any = {}
+
+export const CONTA_TESTE = {identifier: 'teste@steely.dev', password: 'Steely@2026x'}
+export const CONTA_2FA = {identifier: 'doisfatores@steely.dev', password: 'Steely@2026x', code: '123456'}
+
+function contaInicial(){
+  return {
+    id: 'u1',
+    displayName: 'Usuário Teste',
+    bio: 'Monto PCs nas horas vagas.',
+    region: 'Zona 7, Maringá – PR',
+    memberSince: '2026-03-01T00:00:00Z',
+    avatarUrl: null,
+    emailMasked: 'te•••@steely.dev',
+    emailVerified: true,
+    twoFactorEnabled: true,
+    reputation: {average: 4.8, reviews: 23, deals: 31, criteria: [
+      {key: 'communication', average: 4.9},
+      {key: 'punctuality', average: 4.6},
+      {key: 'listingAccuracy', average: 4.8},
+    ]},
+    esg: {kgAvoided: 7.4, badges: [{id: 'b1', kind: 'recycler'}, {id: 'b2', kind: 'donor'}]},
+    listings: {active: 3, paused: 1},
+    coins: 340,
+    version: 1,
+  }
+}
+
+function segurancaInicial(){
+  const dia = 86400000
+  return {
+    twoFactor: {enabled: true, method: 'APP'},
+    passwordChangedAt: new Date(Date.now() - 60 * dia).toISOString(),
+    sessions: [
+      {id: 's1', device: 'Android · este aparelho', kind: 'mobile', location: 'Maringá, PR', lastActiveAt: new Date().toISOString(), current: true},
+      {id: 's2', device: 'Chrome no Windows', kind: 'desktop', location: 'Maringá, PR', lastActiveAt: new Date(Date.now() - 3 * dia).toISOString(), current: false},
+    ],
+  }
+}
+
+function sessaoNova(){
+  contador++
+  return {status: 'AUTHENTICATED', accessToken: 'access-mock-' + contador, refreshToken: 'refresh-mock-' + contador, expiresIn: 900, qrPublicKey: 'A'.repeat(43) + '=', user: {id: conta.id, displayName: conta.displayName, avatarUrl: conta.avatarUrl}}
+}
+
+function codigosRecuperacao(){
+  const lista = []
+  for(let i = 0; i < 8; i++) lista.push(Math.random().toString(36).slice(2, 7).toUpperCase() + '-' + Math.random().toString(36).slice(2, 7).toUpperCase())
+  return lista
+}
+
+export function mudarConta(dados: any){
+  Object.assign(conta, dados)
+}
+
 export function resetarMock(){
   anuncios = anunciosIniciais()
   cenarioScanner = 'AUTO_L5'
+  falhasLogin = 0
+  conta = contaInicial()
+  seguranca = segurancaInicial()
 }
 
 function responder(status: number, corpo: any){
@@ -37,8 +97,112 @@ function temDadoPessoal(texto: string){
   return /\S+@\S+\.\S+/.test(texto) || /\d[\d\s().-]{7,}\d/.test(texto)
 }
 
-export async function respostaMock(caminho: string, metodo: string, body: any){
+export async function respostaMock(caminho: string, metodo: string, body: any, cabecalho: any = {}){
   await new Promise(r => setTimeout(r, 300))
+
+  if(metodo == 'POST' && caminho == '/auth/login'){
+    if(falhasLogin >= 5) return responder(429, {type: 'about:blank', title: 'Muitas tentativas', status: 429, detail: 'Muitas tentativas. Tente de novo em 15 minutos.', code: 'LOGIN_LOCKED', retryAfter: 900})
+    if(falhasLogin >= 3 && !cabecalho['X-Turnstile-Token']) return erro(403, 'CAPTCHA_REQUIRED', 'Confirme que você é humano')
+    const certo = body && (body.identifier == CONTA_TESTE.identifier || body.identifier == CONTA_2FA.identifier) && body.password == CONTA_TESTE.password
+    if(!certo){
+      falhasLogin++
+      if(falhasLogin >= 5) return responder(429, {type: 'about:blank', title: 'Muitas tentativas', status: 429, detail: 'Muitas tentativas. Tente de novo em 15 minutos.', code: 'LOGIN_LOCKED', retryAfter: 900})
+      return erro(401, 'INVALID_CREDENTIALS', 'E-mail, CPF ou senha incorretos.')
+    }
+    falhasLogin = 0
+    if(body.identifier == CONTA_2FA.identifier) return responder(200, {status: 'TWO_FACTOR_REQUIRED', challengeId: 'c1', method: 'APP'})
+    return responder(200, sessaoNova())
+  }
+
+  if(metodo == 'POST' && caminho == '/auth/login/2fa'){
+    if(!body || body.code != CONTA_2FA.code) return erro(422, 'CODE_INVALID', 'Código inválido.')
+    return responder(200, sessaoNova())
+  }
+
+  if(metodo == 'POST' && caminho == '/auth/refresh'){
+    if(!body || !String(body.refreshToken || '').startsWith('refresh-mock')) return erro(401, 'TOKEN_EXPIRED', 'Sessão expirada.')
+    return responder(200, sessaoNova())
+  }
+
+  if(metodo == 'POST' && caminho == '/auth/logout') return new Response(null, {status: 204})
+
+  if((caminho == '/me' || caminho.startsWith('/me/')) && !String(cabecalho.Authorization || '').startsWith('Bearer access-mock')){
+    return erro(401, 'TOKEN_EXPIRED', 'Sessão expirada.')
+  }
+
+  if(metodo == 'GET' && caminho == '/me') return responder(200, {id: conta.id, email: 'teste@steely.dev', role: 'USER'})
+
+  if(metodo == 'GET' && caminho == '/me/profile') return responder(200, conta)
+
+  if(metodo == 'PATCH' && caminho == '/me/profile'){
+    if(!body.displayName || body.displayName.trim().length < 2) return erro(422, 'VALIDATION_ERROR', 'Use pelo menos 2 caracteres.')
+    if(/@|\d{4,}/.test(body.displayName)) return erro(422, 'VALIDATION_ERROR', 'Não use e-mail ou telefone no nome de exibição.')
+    if(temDadoPessoal(body.bio || '')) return erro(422, 'PII_OR_CONTACT_DETECTED', 'Dados pessoais no perfil', 'Tire telefone, e-mail ou endereço do "Sobre você".')
+    if(body.version && body.version != conta.version) return erro(409, 'CONFLICT', 'O perfil mudou', 'Seu perfil foi alterado em outro aparelho.')
+    conta.displayName = body.displayName.trim()
+    conta.bio = body.bio || ''
+    conta.region = body.region
+    conta.version++
+    return responder(200, conta)
+  }
+
+  if(metodo == 'POST' && caminho == '/me/avatar'){
+    conta.avatarUrl = 'https://exemplo.invalid/avatars/' + conta.id + '.webp'
+    return responder(200, conta)
+  }
+
+  if(metodo == 'GET' && caminho == '/me/security') return responder(200, seguranca)
+
+  if(metodo == 'PUT' && caminho == '/me/password'){
+    if(body.currentPassword != CONTA_TESTE.password) return erro(422, 'CURRENT_PASSWORD_INVALID', 'Senha atual incorreta.')
+    if(body.newPassword == body.currentPassword) return erro(422, 'PASSWORD_REUSED', 'A nova senha precisa ser diferente da atual.')
+    seguranca.passwordChangedAt = new Date().toISOString()
+    seguranca.sessions = seguranca.sessions.filter((x: any)=> x.current)
+    return new Response(null, {status: 204})
+  }
+
+  if(metodo == 'POST' && caminho == '/me/2fa/setup') return responder(200, {secret: 'JBSWY3DPEHPK3PXP', otpauthUrl: 'otpauth://totp/Steely:teste?secret=JBSWY3DPEHPK3PXP&issuer=Steely'})
+
+  if(metodo == 'POST' && caminho == '/me/2fa/enable'){
+    if(!body || body.code != CONTA_2FA.code) return erro(422, 'CODE_INVALID', 'Código inválido.')
+    seguranca.twoFactor = {enabled: true, method: 'APP'}
+    conta.twoFactorEnabled = true
+    return responder(200, {codes: codigosRecuperacao()})
+  }
+
+  if(metodo == 'POST' && caminho == '/me/2fa/disable'){
+    if(body.password != CONTA_TESTE.password) return erro(422, 'CURRENT_PASSWORD_INVALID', 'Senha atual incorreta.')
+    if(body.code != CONTA_2FA.code) return erro(422, 'CODE_INVALID', 'Código inválido.')
+    seguranca.twoFactor = {enabled: false, method: null}
+    conta.twoFactorEnabled = false
+    return new Response(null, {status: 204})
+  }
+
+  if(metodo == 'POST' && caminho == '/me/2fa/recovery-codes'){
+    if(!seguranca.twoFactor.enabled) return erro(409, 'TWO_FACTOR_DISABLED', 'Ative a verificação em duas etapas primeiro.')
+    return responder(200, {codes: codigosRecuperacao()})
+  }
+
+  const sessao = caminho.match(/^\/me\/sessions\/(\w+)$/)
+  if(metodo == 'DELETE' && sessao){
+    const s = seguranca.sessions.find((x: any)=> x.id == sessao[1])
+    if(!s) return erro(404, 'NOT_FOUND', 'Sessão não encontrada')
+    if(s.current) return erro(400, 'CURRENT_SESSION', 'Para sair deste aparelho use "Sair da conta".')
+    seguranca.sessions = seguranca.sessions.filter((x: any)=> x.id != s.id)
+    return new Response(null, {status: 204})
+  }
+
+  if(metodo == 'DELETE' && caminho == '/me/sessions'){
+    seguranca.sessions = []
+    return new Response(null, {status: 204})
+  }
+
+  if(metodo == 'POST' && caminho == '/me/deletion'){
+    if(body.confirmation != 'EXCLUIR') return erro(422, 'VALIDATION_ERROR', 'Digite EXCLUIR em letras maiúsculas.')
+    if(body.password != CONTA_TESTE.password) return erro(422, 'CURRENT_PASSWORD_INVALID', 'Senha atual incorreta.')
+    if(conta.coins > 0 && !body.acknowledgeCoins) return responder(409, {type: 'about:blank', title: 'Você ainda tem moedas', status: 409, detail: 'Você ainda tem ' + conta.coins + ' moedas. Elas serão perdidas.', code: 'DELETION_BLOCKED', pending: [{kind: 'COINS', amount: conta.coins}]})
+    return responder(202, {effectiveAt: new Date(Date.now() + 30 * 86400000).toISOString()})
+  }
 
   if(metodo == 'POST' && caminho == '/media'){
     contador++
@@ -73,7 +237,7 @@ export async function respostaMock(caminho: string, metodo: string, body: any){
     if(temDadoPessoal(body.description || '')) return erro(422, 'PII_OR_CONTACT_DETECTED', 'Dados pessoais na descrição', 'Tire telefone, e-mail ou endereço da descrição.')
     if(body.hazardousMaterial) return erro(422, 'VALIDATION_ERROR', 'Item com risco químico')
     contador++
-    const novo = {id: 'a' + contador, title: body.title, description: body.description, priceCents: body.priceCents, operationalState: body.operationalState, status: 'EM_TRIAGEM', views: 0, chats: 0, openProposals: 0, hasSchedule: false, inAuction: false, neighborhood: body.neighborhood, version: 1}
+    const novo = {id: 'novo' + contador, title: body.title, description: body.description, priceCents: body.priceCents, operationalState: body.operationalState, status: 'EM_TRIAGEM', views: 0, chats: 0, openProposals: 0, hasSchedule: false, inAuction: false, neighborhood: body.neighborhood, version: 1}
     anuncios.push(novo)
     return responder(201, novo)
   }
@@ -121,6 +285,14 @@ export async function respostaMock(caminho: string, metodo: string, body: any){
     }
   }
 
+  if(metodo == 'GET' && caminho.startsWith('/sync/pull')){
+    return responder(200, {changes: {routes: {created: [], updated: [], deleted: []}, appointments: {created: [], updated: [], deleted: []}, meeting_points: {created: [], updated: [], deleted: []}}, timestamp: Date.now()})
+  }
+
+  if(metodo == 'POST' && caminho.startsWith('/orders/') && caminho.endsWith('/delivery-confirmation')){
+    return responder(200, {status: 'ENTREGUE'})
+  }
+
   return erro(501, 'NOT_IMPLEMENTED', 'mock ainda nao tem ' + metodo + ' ' + caminho)
 }
 
@@ -133,6 +305,6 @@ export function ligarMock(){
     if(!texto.startsWith(URL_API)) return fetchOriginal(url, opcoes)
     let body = opcoes.body
     if(typeof body == 'string') body = JSON.parse(body)
-    return respostaMock(texto.replace(URL_API, ''), opcoes.method || 'GET', body)
+    return respostaMock(texto.replace(URL_API, ''), opcoes.method || 'GET', body, opcoes.headers || {})
   }) as any
 }
