@@ -165,9 +165,11 @@ export default function Detalhes(){
           <View style={{flex:1}}>
             <View style={styles.linhalabel}>
               <Text style={styles.label}>Categoria <Text style={styles.asterisco}>*</Text></Text>
-              <Selo campo="categoria" nome="Categoria"/>
             </View>
             <Seletor nome="Categoria" valor={anuncio.categoria} opcoes={CATEGORIAS} aoEscolher={(v)=> digitar('categoria', v)} erro={!!erros.categoria}/>
+            <View style={styles.selobaixo}>
+              <Selo campo="categoria" nome="Categoria"/>
+            </View>
             {erros.categoria ? <Text style={styles.erro} accessibilityLiveRegion="polite">{erros.categoria}</Text> : null}
           </View>
           <View style={{flex:1}}>
@@ -334,6 +336,7 @@ const styles = StyleSheet.create({
   asterisco:     {color:cores.vermelho},
   selo:          {flexDirection:'row', alignItems:'center', gap:4, paddingHorizontal:8, height:22, borderRadius:999, backgroundColor:cores.verdeForte},
   textoselo:     {fontFamily:fontes.textoMedio, fontSize:11},
+  selobaixo:     {flexDirection:'row', marginTop:6},
   input:         {height:48, borderRadius:12, borderWidth:1, borderColor:cores.borda, backgroundColor:cores.campo, paddingHorizontal:14, fontFamily:fontes.texto, fontSize:15, color:cores.branco},
   inputerro:     {borderColor:cores.vermelho},
   seletor:       {flexDirection:'row', alignItems:'center', justifyContent:'space-between'},

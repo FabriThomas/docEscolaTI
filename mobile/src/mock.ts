@@ -237,7 +237,7 @@ export async function respostaMock(caminho: string, metodo: string, body: any, c
     if(temDadoPessoal(body.description || '')) return erro(422, 'PII_OR_CONTACT_DETECTED', 'Dados pessoais na descrição', 'Tire telefone, e-mail ou endereço da descrição.')
     if(body.hazardousMaterial) return erro(422, 'VALIDATION_ERROR', 'Item com risco químico')
     contador++
-    const novo = {id: 'a' + contador, title: body.title, description: body.description, priceCents: body.priceCents, operationalState: body.operationalState, status: 'EM_TRIAGEM', views: 0, chats: 0, openProposals: 0, hasSchedule: false, inAuction: false, neighborhood: body.neighborhood, version: 1}
+    const novo = {id: 'novo' + contador, title: body.title, description: body.description, priceCents: body.priceCents, operationalState: body.operationalState, status: 'EM_TRIAGEM', views: 0, chats: 0, openProposals: 0, hasSchedule: false, inAuction: false, neighborhood: body.neighborhood, version: 1}
     anuncios.push(novo)
     return responder(201, novo)
   }
