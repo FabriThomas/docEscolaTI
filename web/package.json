@@ -1,0 +1,63 @@
+{
+  "name": "steely-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:hibrido": "vite --mode hibrido",
+    "build": "tsc -b && vite build",
+    "build:demo": "tsc -b && vite build --mode demo",
+    "preview": "vite preview",
+    "typecheck": "tsc -b",
+    "lint": "oxlint && node scripts/verificar-tokens.mjs",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:cobertura": "vitest run --coverage",
+    "e2e": "playwright test",
+    "tokens": "npm --prefix ../packages/tokens run build",
+    "api:types": "node scripts/gerar-api.mjs",
+    "lighthouse": "npx --yes @lhci/cli@0.14 autorun",
+    "verificar": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "semear": "node scripts/semear-anuncios.mjs"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^7.0.7",
+    "@tanstack/react-query": "^5.108.0",
+    "lucide-react": "^1.74.0",
+    "openapi-fetch": "^0.17.0",
+    "radix-ui": "^1.8.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-hook-form": "^7.92.0",
+    "react-router": "^8.5.1",
+    "zod": "^4.6.7",
+    "zustand": "^5.1.0"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@testing-library/user-event": "^14.6.12",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "@vitest/coverage-v8": "^5.1.0",
+    "axe-core": "^4.14.1",
+    "jsdom": "^31.0.1",
+    "msw": "^3.0.6",
+    "oxlint": "^1.90.0",
+    "tailwindcss": "^4.3.5",
+    "typescript": "~7.0.2",
+    "vite": "^8.3.6",
+    "vitest": "^5.1.0"
+  },
+  "msw": {
+    "workerDirectory": [
+      "public"
+    ]
+  }
+}

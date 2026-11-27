@@ -1,0 +1,19 @@
+{
+  "name": "@steely/tokens",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Tokens do Design System Steely (ADR-19): tokens.json → tokens.css (web) e tokens.ts (app).",
+  "type": "module",
+  "exports": {
+    "./tokens.css": "./build/tokens.css",
+    "./tokens": "./build/tokens.ts",
+    "./tokens.json": "./build/tokens.json"
+  },
+  "scripts": {
+    "build": "node sd.config.mjs && node scripts/contraste.mjs",
+    "contraste": "node scripts/contraste.mjs"
+  },
+  "devDependencies": {
+    "style-dictionary": "^5.8.0"
+  }
+}

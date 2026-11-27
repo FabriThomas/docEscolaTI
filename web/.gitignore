@@ -1,0 +1,6 @@
+dist/
+coverage/
+lighthouse/
+.lighthouseci/
+playwright-report/
+test-results/
