@@ -141,13 +141,14 @@ export async function api<T>(caminho: string, schema: Parser<T> | null, opcoes: 
 export const SEM_RENOVACAO = 'X-Steely-Sem-Renovacao'
 
 async function enviar(requisicao: Request): Promise<Response> {
-  const headers = new Headers(requisicao.headers)
+  // Ajusta os cabeçalhos na própria requisição: recriá-la com corpo exige "duplex" no navegador.
+  const headers = requisicao.headers
   headers.delete(SEM_RENOVACAO)
   const token = tokenDeAcesso.obter()
   if (token) headers.set('Authorization', `Bearer ${token}`)
   if (!headers.has('X-Correlation-Id')) headers.set('X-Correlation-Id', crypto.randomUUID())
   try {
-    return await fetch(new Request(requisicao, { headers, credentials: 'include' }))
+    return await fetch(requisicao)
   } catch (erro) {
     if (requisicao.signal?.aborted) throw erro
     throw new ApiError(0, {

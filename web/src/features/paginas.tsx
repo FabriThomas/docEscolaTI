@@ -1,11 +1,75 @@
+import { useState } from 'react'
 import { Link } from 'react-router'
+import { ToggleGroup } from 'radix-ui'
 import { Construction, Recycle, ScanSearch, ShieldCheck } from 'lucide-react'
+import { useFeed } from '@/api/anuncios'
 import { useSessao } from '@/api/auth'
+import { CATEGORIAS } from '@/lib/anuncios'
+import { cn } from '@/lib/cn'
+import { GradeAnuncios } from '@/components/anuncios/CartaoAnuncio'
 import { MetaPagina } from '@/components/MetaPagina'
 import { Button } from '@/components/ui/Button'
 import { Cartao, IconeEmCaixa } from '@/components/ui/Exibicao'
 
-/** Página inicial pública. O feed de ofertas (tela 001) é de outra tarefa. */
+/** Feed de anúncios ativos (tela 001): impulsionados primeiro, paginação por cursor. */
+function FeedAnuncios() {
+  const [categoria, setCategoria] = useState('')
+  const feed = useFeed(categoria)
+  const anuncios = feed.data?.pages.flatMap((p) => p.items)
+  return (
+    <section aria-labelledby="titulo-feed" className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-end justify-between gap-3">
+        <h2 id="titulo-feed" className="font-title text-18 font-bold">
+          Anúncios recentes
+        </h2>
+        <Link to="/buscar" className="text-13 font-semibold text-brand hover:underline">
+          Busca avançada
+        </Link>
+      </div>
+      <ToggleGroup.Root
+        type="single"
+        value={categoria || 'todas'}
+        onValueChange={(v) => v && setCategoria(v === 'todas' ? '' : v)}
+        aria-label="Filtrar por categoria"
+        className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 md:mx-0 md:flex-wrap md:px-0"
+      >
+        {[{ valor: 'todas', rotulo: 'Todas' }, ...CATEGORIAS].map((c) => (
+          <ToggleGroup.Item
+            key={c.valor}
+            value={c.valor}
+            className={cn(
+              'touch-target shrink-0 rounded-full border border-control bg-field px-4 text-13 font-semibold text-muted',
+              'data-[state=on]:border-brand data-[state=on]:bg-brand data-[state=on]:text-on-brand',
+            )}
+          >
+            {c.rotulo}
+          </ToggleGroup.Item>
+        ))}
+      </ToggleGroup.Root>
+      <GradeAnuncios
+        anuncios={anuncios}
+        carregando={feed.isPending}
+        erro={feed.error}
+        aoTentarDeNovo={() => feed.refetch()}
+        vazio={
+          <>
+            Nenhum anúncio ativo por aqui ainda.{' '}
+            <Link to="/anunciar" className="font-semibold text-brand hover:underline">
+              Anuncie uma peça
+            </Link>
+          </>
+        }
+      />
+      {feed.hasNextPage && (
+        <Button variant="secondary" className="self-center" loading={feed.isFetchingNextPage} onClick={() => feed.fetchNextPage()}>
+          Carregar mais
+        </Button>
+      )}
+    </section>
+  )
+}
+
+/** Página inicial: destaque, feed de anúncios (tela 001) e como funciona. */
 export function InicioPage() {
   const { data: usuario } = useSessao()
   return (
@@ -40,6 +104,8 @@ export function InicioPage() {
           )}
         </div>
       </section>
+
+      <FeedAnuncios />
 
       <ul className="grid gap-4 md:grid-cols-3">
         {[

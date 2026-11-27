@@ -122,7 +122,11 @@ describe('Criar conta e verificar e-mail (telas 02 e 03, STY001)', () => {
 
     await screen.findByRole('heading', { name: 'Verifique seu e-mail' })
     expect(screen.getByText('carla.mendes@exemplo.com')).toBeInTheDocument()
-    await usuario.type(screen.getByLabelText('Dígito 1 de 6'), DEMO.codigo)
+    // Cola o código inteiro (onPaste) em vez de digitar tecla a tecla: com muitos testes em
+    // paralelo, a digitação lenta no jsdom ficava sujeita ao tempo de cada tecla.
+    const primeiro = await screen.findByLabelText('Dígito 1 de 6')
+    await usuario.click(primeiro)
+    await usuario.paste(DEMO.codigo)
     // Na suíte completa, a primeira carga do layout e do perfil pode passar de 5 s.
     expect(await screen.findByRole('heading', { name: 'Perfil' }, { timeout: 15_000 })).toBeInTheDocument()
     expect(screen.getByText('Conta criada! Você ganhou moedas de boas-vindas.')).toBeInTheDocument()

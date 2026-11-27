@@ -25,6 +25,12 @@ const SobrePage = lazy(carregar.SobrePage)
 const TermosPage = lazy(carregar.TermosPage)
 const PrivacidadePage = lazy(carregar.PrivacidadePage)
 const AjudaPage = lazy(carregar.AjudaPage)
+const BuscarPage = lazy(carregar.BuscarPage)
+const AnuncioPage = lazy(carregar.AnuncioPage)
+const AnunciarPage = lazy(carregar.AnunciarPage)
+const FavoritosPage = lazy(() => carregar.ListasPages().then((m) => ({ default: m.FavoritosPage })))
+const CompararPage = lazy(() => carregar.ListasPages().then((m) => ({ default: m.CompararPage })))
+const MeusAnunciosPage = lazy(() => carregar.ListasPages().then((m) => ({ default: m.MeusAnunciosPage })))
 
 export default function App() {
   return (
@@ -46,8 +52,9 @@ export default function App() {
             <Route path="termos" element={<TermosPage />} />
             <Route path="privacidade" element={<PrivacidadePage />} />
             <Route path="ajuda" element={<AjudaPage />} />
-            <Route path="buscar" element={<EmBrevePage titulo="Buscar" />} />
-            <Route path="anunciar" element={<EmBrevePage titulo="Anunciar" />} />
+            <Route path="buscar" element={<BuscarPage />} />
+            <Route path="anuncios/:id" element={<AnuncioPage />} />
+            <Route path="comparar" element={<CompararPage />} />
             <Route path="chat" element={<EmBrevePage titulo="Chat" />} />
 
             <Route element={<RotaProtegida />}>
@@ -55,7 +62,9 @@ export default function App() {
               <Route path="perfil/editar" element={<EditarPerfilPage />} />
               <Route path="seguranca" element={<SegurancaPage />} />
               <Route path="conta/excluir" element={<ExcluirContaPage />} />
-              <Route path="anuncios" element={<EmBrevePage titulo="Meus anúncios" />} />
+              <Route path="anunciar" element={<AnunciarPage />} />
+              <Route path="anuncios" element={<MeusAnunciosPage />} />
+              <Route path="favoritos" element={<FavoritosPage />} />
               <Route path="carteira" element={<EmBrevePage titulo="Carteira" />} />
               <Route path="impacto-esg" element={<EmBrevePage titulo="Meu impacto ESG" />} />
             </Route>

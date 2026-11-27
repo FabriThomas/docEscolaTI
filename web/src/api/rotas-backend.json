@@ -1,6 +1,17 @@
 {
   "versao": "1.0.0",
   "rotas": [
+    "/anuncios/",
+    "/anuncios/busca",
+    "/anuncios/comparador",
+    "/anuncios/favoritos/meus",
+    "/anuncios/{anuncio_id}",
+    "/anuncios/{anuncio_id}/boost",
+    "/anuncios/{anuncio_id}/estatisticas",
+    "/anuncios/{anuncio_id}/favorito",
+    "/anuncios/{anuncio_id}/fotos",
+    "/anuncios/{anuncio_id}/pausar",
+    "/anuncios/{anuncio_id}/reativar",
     "/health",
     "/me"
   ]

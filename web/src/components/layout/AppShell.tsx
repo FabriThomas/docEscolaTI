@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, NavLink, Outlet, useNavigate } from 'react-router'
 import { DropdownMenu } from 'radix-ui'
-import { ChevronDown, CircleHelp, House, LogOut, MessageCircle, Plus, Search, ShieldCheck, User } from 'lucide-react'
+import { ChevronDown, CircleHelp, Heart, House, LogOut, MessageCircle, Plus, Search, ShieldCheck, Tag, User } from 'lucide-react'
 import { useSair, useSessao } from '@/api/auth'
 import { useEncerrarSessaoLocal } from '@/api/conta'
 import { avisar } from '@/stores/avisos'
@@ -65,6 +65,12 @@ function MenuUsuario() {
             <DropdownMenu.Item className={item} onSelect={() => navigate('/perfil')}>
               <User aria-hidden="true" className="size-4 text-icon" /> Meu perfil
             </DropdownMenu.Item>
+            <DropdownMenu.Item className={item} onSelect={() => navigate('/anuncios')}>
+              <Tag aria-hidden="true" className="size-4 text-icon" /> Meus anúncios
+            </DropdownMenu.Item>
+            <DropdownMenu.Item className={item} onSelect={() => navigate('/favoritos')}>
+              <Heart aria-hidden="true" className="size-4 text-icon" /> Favoritos
+            </DropdownMenu.Item>
             <DropdownMenu.Item className={item} onSelect={() => navigate('/seguranca')}>
               <ShieldCheck aria-hidden="true" className="size-4 text-icon" /> Segurança
             </DropdownMenu.Item>
@@ -110,7 +116,8 @@ function Busca() {
       className="relative w-full max-w-xl"
       onSubmit={(e) => {
         e.preventDefault()
-        navigate('/buscar')
+        const texto = String(new FormData(e.currentTarget).get('q') ?? '').trim()
+        navigate(texto ? `/buscar?q=${encodeURIComponent(texto)}` : '/buscar')
       }}
     >
       <label htmlFor="busca-global" className="sr-only">
@@ -119,6 +126,7 @@ function Busca() {
       <Search aria-hidden="true" className="pointer-events-none absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-icon" />
       <input
         id="busca-global"
+        name="q"
         type="search"
         placeholder="Buscar placa de vídeo, memória, SSD…"
         className="control-height w-full rounded-md border border-control bg-field pl-10 pr-4 text-14 focus-visible:border-brand focus-visible:outline-offset-0"

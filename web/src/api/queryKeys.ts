@@ -9,4 +9,13 @@ export const queryKeys = {
   servidor: {
     saude: ['servidor', 'saude'] as const,
   },
+  anuncios: {
+    todos: ['anuncios'] as const,
+    feed: (categoria: string) => ['anuncios', 'feed', categoria] as const,
+    busca: (filtros: object) => ['anuncios', 'busca', filtros] as const,
+    detalhe: (id: string) => ['anuncios', 'detalhe', id] as const,
+    estatisticas: (id: string) => ['anuncios', 'estatisticas', id] as const,
+    favoritos: ['anuncios', 'favoritos'] as const,
+    comparador: (ids: string[]) => ['anuncios', 'comparador', ...ids] as const,
+  },
 }

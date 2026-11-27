@@ -29,7 +29,9 @@ Errar a senha 3 vezes mostra o captcha; 5 vezes bloqueia por 15 minutos (recarre
 
 ## Com o backend (FastAPI)
 
-O backend da EDTS-374 já tem `GET /api/v1/health` e `GET /api/v1/me`. Para usar o web com ele:
+> **Atenção:** hoje a fundação (`EDTS-374_fundacao_fast_api`) e os anúncios (`feat/EDTS-373-endpoints-anuncios-postgis-webp`) estão em branches separados e não rodam juntos sem adaptadores: os anúncios importam `app.api.deps`, `app.schemas.auth`, `app.core.errors.ProblemException` e `app.core.security`, que não existem na fundação, e o router não está registrado em `/api/v1/anuncios`. Enquanto o backend não juntar as duas partes, é preciso aplicar esses adaptadores localmente.
+
+O web usa o que o backend já tem: `GET /api/v1/health` e `GET /api/v1/me` (fundação, EDTS-374) e as rotas de anúncios em `/api/v1/anuncios` (EDTS-373: CRUD, pausar, boost, estatísticas, busca por raio, favoritos e comparador). Para usar o web com ele:
 
 1. Suba o FastAPI em `http://127.0.0.1:8000` (veja [backend/README.md](../backend/README.md)), com o `backend/.env` copiado do `.env.example`.
 2. Rode o web no modo híbrido:
@@ -38,7 +40,7 @@ O backend da EDTS-374 já tem `GET /api/v1/health` e `GET /api/v1/me`. Para usar
 npm run dev:hibrido
 ```
 
-Nesse modo, `/api` vai para o FastAPI pelo proxy do Vite. As rotas que ele já tem (lista em [src/api/rotas-backend.json](src/api/rotas-backend.json)) são atendidas de verdade, e o resto (login, cadastro, perfil, segurança) continua simulado. O login simulado assina um JWT HS256 com o segredo de **teste** do backend, então o `GET /me` real aceita a sessão. O status do servidor aparece no rodapé e no aviso de demonstração.
+Nesse modo, `/api` vai para o FastAPI pelo proxy do Vite. As rotas que ele já tem (lista em [src/api/rotas-backend.json](src/api/rotas-backend.json)) são atendidas de verdade, e o resto (login, cadastro, perfil, segurança) continua simulado. Como o backend ainda guarda os anúncios só em memória, rode `npm run semear` depois de subir o FastAPI para criar anúncios de exemplo. O login simulado assina um JWT HS256 com o segredo de **teste** do backend, então o `GET /me` real aceita a sessão. O status do servidor aparece no rodapé e no aviso de demonstração.
 
 Quando o backend ganhar rotas novas, atualize os tipos e a lista:
 
@@ -63,6 +65,7 @@ O script lê `../backend/openapi/openapi.snapshot.json`, gera [src/api/schema.d.
 | `npm run lighthouse` | Lighthouse CI com nota mínima 0,9 (relatórios em `lighthouse/`) |
 | `npm run tokens` | Regera os tokens a partir de `packages/tokens/tokens.json` |
 | `npm run api:types` | Gera os tipos e a lista de rotas a partir do snapshot do OpenAPI do backend |
+| `npm run semear` | Cria anúncios de exemplo no FastAPI local (que guarda tudo em memória) |
 
 Variáveis de ambiente: veja [.env.example](.env.example).
 
@@ -80,8 +83,15 @@ Variáveis de ambiente: veja [.env.example](.env.example).
 | `/seguranca` | 2FA, senha, códigos de recuperação e sessões | 054 · STY007 a STY009 |
 | `/conta/excluir` | Pedido de exclusão com carência de 30 dias | 056 · STY010 |
 | `/sobre`, `/termos`, `/privacidade`, `/ajuda` | Institucionais | 045 a 048 |
+| `/` | Feed de anúncios com filtro por categoria e paginação por cursor | 001 · STY020 |
+| `/buscar` | Busca por texto, categoria, condição, preço e raio a partir de uma cidade ou da sua localização | 015 a 019 · STY020 |
+| `/anuncios/:id` | Detalhe com especificações, favoritar e comparar; quem anunciou edita, pausa, reativa, impulsiona, vê estatísticas e exclui | 008 a 011, 044 · STY016, STY018, STY019 |
+| `/anunciar` | Criar anúncio em 4 etapas (fotos, detalhes, preço e local, revisão) | 003 a 006 · STY016 |
+| `/anuncios`, `/favoritos`, `/comparar` | Meus anúncios (só os ativos, por enquanto), favoritos e comparador de especificações | 007, 012, 013 |
 
-Busca, anúncios, chat, carteira e ESG aparecem na navegação como "em breve": são de outras tarefas.
+Chat, carteira e ESG aparecem na navegação como "em breve": são de outras tarefas.
+
+Limitações do backend de anúncios hoje: os dados ficam em memória (somem ao reiniciar), as fotos são validadas e convertidas mas não ficam guardadas (os cartões mostram o ícone da categoria), não há rota de "meus anúncios" com os pausados e os campos vêm em snake_case.
 
 ## Organização
 

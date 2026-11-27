@@ -20,6 +20,10 @@ export const carregar = {
   TermosPage: () => import('@/features/institucional/TermosPage'),
   PrivacidadePage: () => import('@/features/institucional/PrivacidadePage'),
   AjudaPage: () => import('@/features/institucional/AjudaPage'),
+  BuscarPage: () => import('@/features/anuncios/BuscarPage'),
+  AnuncioPage: () => import('@/features/anuncios/AnuncioPage'),
+  AnunciarPage: () => import('@/features/anuncios/AnunciarPage'),
+  ListasPages: () => import('@/features/anuncios/ListasPages'),
 }
 
 const telasAuth: Record<string, keyof typeof carregar> = {
@@ -41,6 +45,11 @@ const telasApp: Record<string, keyof typeof carregar> = {
   '/termos': 'TermosPage',
   '/privacidade': 'PrivacidadePage',
   '/ajuda': 'AjudaPage',
+  '/buscar': 'BuscarPage',
+  '/anunciar': 'AnunciarPage',
+  '/anuncios': 'ListasPages',
+  '/favoritos': 'ListasPages',
+  '/comparar': 'ListasPages',
 }
 
 export function preCarregar(caminho: string) {
@@ -52,5 +61,5 @@ export function preCarregar(caminho: string) {
     return
   }
   void carregar.AppShell()
-  void carregar[telasApp[rota] ?? 'paginas']()
+  void carregar[telasApp[rota] ?? (rota.startsWith('/anuncios/') ? 'AnuncioPage' : 'paginas')]()
 }

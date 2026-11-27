@@ -18,7 +18,8 @@
     "tokens": "npm --prefix ../packages/tokens run build",
     "api:types": "node scripts/gerar-api.mjs",
     "lighthouse": "npx --yes @lhci/cli@0.14 autorun",
-    "verificar": "npm run typecheck && npm run lint && npm run test && npm run build"
+    "verificar": "npm run typecheck && npm run lint && npm run test && npm run build",
+    "semear": "node scripts/semear-anuncios.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^7.0.7",

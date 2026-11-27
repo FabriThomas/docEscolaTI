@@ -1,4 +1,5 @@
 import { DEMO } from './demo'
+import { reiniciarAnuncios } from './anuncios'
 
 /** Estado em memória da API simulada. No navegador, persiste na sessionStorage da aba. */
 
@@ -132,6 +133,7 @@ export function salvar() {
 /** Usado pelos testes para começar cada caso do zero. */
 export function reiniciarDb() {
   db = estadoInicial()
+  reiniciarAnuncios()
   tentativasLogin.clear()
   desafios2fa.clear()
   codigos.clear()

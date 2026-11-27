@@ -24,8 +24,14 @@ const semServidor = !import.meta.env.VITE_API_URL && !import.meta.env.VITE_API_P
 export const mocksParciais = modo === 'parcial'
 export const mocksAtivos = modo === 'tudo' || modo === 'true' || mocksParciais || (import.meta.env.DEV && semServidor && modo !== 'nao')
 
+/** Converte "/anuncios/{anuncio_id}/boost" em uma expressão que aceita qualquer id. */
+function padraoDaRota(rota: string): RegExp {
+  const caminho = rota.replace(/\{[^}]+\}/g, '[^/]+').replace(/\/$/, '')
+  return new RegExp('^/api/v1' + caminho + '/?$')
+}
+
 /** Rotas atendidas pelo FastAPI de verdade quando o modo é parcial. */
-export const ROTAS_DO_BACKEND: readonly string[] = rotasBackend.rotas.map((r) => `/api/v1${r}`)
+export const ROTAS_DO_BACKEND: readonly RegExp[] = rotasBackend.rotas.map(padraoDaRota)
 
 /** Segredo de teste para assinar o JWT simulado (o mesmo SUPABASE_JWT_SECRET do .env do backend local). */
 export const SEGREDO_JWT_DEV = import.meta.env.VITE_DEV_JWT_SECRET ?? ''

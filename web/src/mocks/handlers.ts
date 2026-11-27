@@ -3,6 +3,7 @@ import { CODIGOS_ERRO, FOTO_MAX_BYTES, FOTO_TIPOS } from '@steely/schemas'
 import { codigos, db, desafios2fa, salvar, segredos2fa, tentativasLogin, usuarioPorSessao, type UsuarioMock } from './db'
 import { DEMO, SEGREDO_JWT_DEV } from './demo'
 import { assinarJwt, lerSessaoDoToken } from './jwt'
+import { handlersAnuncios } from './anuncios'
 
 /**
  * API simulada com o mesmo contrato esperado do FastAPI (ADR-13): /api/v1, JSON em camelCase,
@@ -136,6 +137,9 @@ const novosCodigosRecuperacao = () =>
   })
 
 export const handlers = [
+  // Anúncios (EDTS-373): mesmo contrato do FastAPI
+  ...handlersAnuncios(sessaoDoToken),
+
   // ---------------- Rotas que o FastAPI já tem (EDTS-374) ----------------
   http.get(`${BASE}/health`, () => HttpResponse.json({ status: 'ok', coreDb: 'not_configured', daasDb: 'not_configured' })),
 
@@ -348,7 +352,7 @@ export const handlers = [
     const atual = sessaoDoToken(request)
     if (!atual) return naoAutenticado()
     const arquivo = (await request.formData()).get('file')
-    if (!(arquivo instanceof File)) return problema(400, 'FILE_REQUIRED', 'Envie uma imagem.')
+    if (!arquivo || typeof arquivo === 'string') return problema(400, 'FILE_REQUIRED', 'Envie uma imagem.')
     if (!(FOTO_TIPOS as readonly string[]).includes(arquivo.type)) return problema(415, 'FILE_TYPE', 'Use uma foto JPG, PNG ou WebP.')
     if (arquivo.size > FOTO_MAX_BYTES) return problema(413, 'FILE_TOO_LARGE', 'A foto pode ter no máximo 5 MB.')
     atual.usuario.avatarUrl = URL.createObjectURL(arquivo)
